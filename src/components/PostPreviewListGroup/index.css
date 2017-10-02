@@ -1,0 +1,13 @@
+.PostPreviewListContainer > div {
+  padding: 5px;
+  border: 1px solid;
+  margin: 0 5px;
+}
+
+.PostPreviewListContainer > div:last-child {
+  margin-right: 0;
+}
+
+.PostPreviewListContainer > div:first-child {
+  margin-left: 0;
+}
