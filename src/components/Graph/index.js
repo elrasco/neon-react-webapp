@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Flex } from "reflexbox";
 import TooltipFormatter from "./TooltipFormatter";
+import "./Tooltip.css";
 
 class Graph extends Component {
   tickFormatter(value) {

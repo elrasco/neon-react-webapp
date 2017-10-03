@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { FormattedNumber } from "react-intl";
 class TooltipFormatter extends Component {
   render() {
     const { active } = this.props;
@@ -12,8 +13,10 @@ class TooltipFormatter extends Component {
       } catch (e) {}
       return (
         <div className="custom-tooltip">
-          <p className="label">{value}</p>
           <p className="desc">{when}</p>
+          <p className="label">
+            Value: <FormattedNumber value={value} />
+          </p>
         </div>
       );
     }
