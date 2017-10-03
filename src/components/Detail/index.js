@@ -45,17 +45,17 @@ class Detail extends Component {
         <Box>
           <Post data={this.state.post} />
         </Box>
-        <Flex wrap w={1}>
-          <Box w={0.5}>
+        <Flex wrap w={1} p={2}>
+          <Box w={0.45}>
             <Graph title={"Reactions"} data={this.state.reactions} />
           </Box>
-          <Box w={0.5}>
+          <Box w={0.45}>
             <Graph title={"Comments"} data={this.state.comments} />
           </Box>
-          <Box w={0.5}>
+          <Box w={0.45}>
             <Graph title={"Likes"} data={this.state.likes} />
           </Box>
-          <Box w={0.5}>
+          <Box w={0.45}>
             <Graph title={"Shares"} data={this.state.shares} />
           </Box>
         </Flex>

@@ -1,6 +1,5 @@
 import React from "react";
 import { Flex, Box } from "reflexbox";
-import { Link } from "react-router-dom";
 import Links from './Links';
 import "./index.css";
 
