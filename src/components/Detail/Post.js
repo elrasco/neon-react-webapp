@@ -8,7 +8,7 @@ class Post extends Component {
         {!this.props.data.page && <div>...</div>}
         {this.props.data.page && <Flex column>
           <div>Page: {this.props.data.page.name} </div>
-          <div>Fanbase: {new Intl.NumberFormat('en-UK').format(this.props.data.page.fan_count)})</div>
+          <div>Fanbase: {new Intl.NumberFormat('en-UK').format(this.props.data.page.fan_count)}</div>
             </Flex>}
         <Flex column w={1} align='start'>
         {this.props.data.title && 
