@@ -1,3 +1,26 @@
 .Preview > div {
   margin: auto;
+  position: relative;
+}
+i.fa.fa-bar-chart {
+  display: block;
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid gray;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.Preview i.fa.fa-paper-plane-o {
+  display: block;
+  color: white;
+  padding: 5px;
+  font-size: 23px;
+  border: 1px solid gray;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  right: 0;
+  top: 33px;
 }

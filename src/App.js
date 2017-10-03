@@ -7,7 +7,6 @@ import Detail from "./components/Detail";
 
 class App extends Component {
   render() {
-    console.log(process.env);
     return (
       <Router>
         <div>
