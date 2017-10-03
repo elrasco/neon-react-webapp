@@ -9,7 +9,7 @@ class Detail extends Component {
     this.state = { comments: [], reactions: [], likes: [], shares: [], post: {} };
   }
   componentDidMount() {
-    const apiHost = "http://localhost:1337";
+    const apiHost = process.env.REACT_APP_API_URL;
     const apiPrefix = `${apiHost}/api/detail`;
     const object = `${this.props.match.params.type}/${this.props.match.params.objectId}`;
 

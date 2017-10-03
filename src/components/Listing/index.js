@@ -6,7 +6,7 @@ class Listing extends Component {
     const apiPrefix = this.props.match.params.period;
     const apiSuffix = this.props.match.params.type === "v" ? "Videos" : "Posts";
     const type = this.props.match.params.type === "v" ? "video" : "post";
-    return <PostPreviewList src={"http://localhost:1337/api/" + apiPrefix + apiSuffix + "?limit=100"} type={type} />;
+    return <PostPreviewList src={process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=100"} type={type} />;
   }
 }
 
