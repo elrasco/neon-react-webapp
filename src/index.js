@@ -6,9 +6,9 @@ import registerServiceWorker from "./registerServiceWorker";
 import { IntlProvider } from "react-intl";
 
 ReactDOM.render(
-    <IntlProvider locale="en">
-      <App />
-    </IntlProvider>,
+  <IntlProvider locale="en">
+    <App />
+  </IntlProvider>,
   document.getElementById("root")
 );
 registerServiceWorker();

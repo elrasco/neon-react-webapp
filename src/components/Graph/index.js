@@ -17,7 +17,7 @@ class Graph extends Component {
         <h3>{this.props.title}</h3>
         <ResponsiveContainer width="98%" height={400}>
           <LineChart data={this.props.data}>
-            <XAxis domain={[this.props.data, this.props.data]} dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} interval="0" />
+            <XAxis domain={["auto", this.props.data]} dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} />
             <YAxis />
             <Tooltip content={<TooltipFormatter />} />
             <Line type="monotone" dataKey="total_count" dot={false} />
