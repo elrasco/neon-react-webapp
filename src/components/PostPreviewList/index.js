@@ -26,7 +26,7 @@ class PostPreviewList extends Component {
     return (
       <Box flex p={"2px"} className="PostPreviewList" {...this.props}>
         <Flex w={1} column>
-        {this.state.previews.length === 0 && <div>Loading....</div>}
+        {this.state.previews.length === 0 && <div>No videos</div>}
           {this.state.previews.length > 0 && <Flex w={1} align={"center"} justify="space-around" wrap order={1}>
             {previews}
           </Flex>}

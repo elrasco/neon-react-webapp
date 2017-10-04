@@ -10,7 +10,7 @@ class Listing extends Component {
     this.checked = true;
     this.checkedPages = [];
     
-    this.updateStatus = name => {
+    const updateStatus = name => {
       let pagesToUpdate = this.state.pages;
       const index = pagesToUpdate.findIndex(page => page.objectId === name);
       pagesToUpdate[index].checked = !pagesToUpdate[index].checked;
@@ -18,14 +18,13 @@ class Listing extends Component {
     }
 
     this.handleInputChange = event => {
-      this.checked = false;
       const name = event.target.name;
       this.setState({
-        pages: this.updateStatus(name)
+        pages: updateStatus(name)
       });
-      this.state.pages.forEach(page => {
-        fetch(`${process.env.REACT_APP_API_URL}/api/pages`);
-      })
+      this.showFilteredPosts = this.pagesToConsider !== 0 ? true : false;
+      this.pagesToConsider = this.state.pages.filter(page => page.checked === true ).map(page => page.objectId);
+      this.checked = this.pagesToConsider.length === 0 ? true : false;  
     }
   }
   
@@ -66,7 +65,8 @@ class Listing extends Component {
     
     return (
       <Flex>
-        <PostPreviewList w={4/5} src={process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=100"} type={type} />
+        {!this.showFilteredPosts | this.checked && <PostPreviewList w={4/5} src={process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=100"} type={type} />}
+        {this.showFilteredPosts & !this.checked && <PostPreviewList w={4/5} src={`${process.env.REACT_APP_API_URL}/api/${apiPrefix + apiSuffix}/byPage/${this.pagesToConsider.toString()}?limit=100`} type={type} />}
         <Flex column w={1/5} p={2}>
         <label>
           <input 
