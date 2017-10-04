@@ -25,7 +25,6 @@ class PostPreviewList extends Component {
       let previews = this.state.previews.map(p => {
         return <Preview auto key={p[this.state.type].objectId} object={p} type={this.state.type} />;
       });
-      console.log(previews)
     return (
       <Box flex p={"2px"} className="PostPreviewList" {...this.props}>
         <Flex w={4/5} column>
