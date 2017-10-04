@@ -4,14 +4,11 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { IntlProvider } from "react-intl";
-import PagesProvider from "./components/PagesProvider";
 
 ReactDOM.render(
-  <PagesProvider>
-    <IntlProvider locale="en">
-      <App />
-    </IntlProvider>
-  </PagesProvider>,
+  <IntlProvider locale="en">
+    <App />
+  </IntlProvider>,
   document.getElementById("root")
 );
 registerServiceWorker();
