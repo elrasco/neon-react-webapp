@@ -1,9 +1,11 @@
 import React from "react";
 import PostPreviewListGroup from "./PostPreviewListGroup";
+import FilterBar from "./FilterBar";
 import { Flex } from "reflexbox";
 
-const Border = props => (
+const Home = props => (
   <Flex column>
+    <FilterBar></FilterBar>
     <PostPreviewListGroup title={"Today"} apiPrefix={"today"} />
     <PostPreviewListGroup title={"Yesterday"} apiPrefix={"yesterday"} />
     <PostPreviewListGroup title={"Last 7 days"} apiPrefix={"sevenD"} />
@@ -11,4 +13,4 @@ const Border = props => (
   </Flex>
 );
 
-export default Border;
+export default Home;
