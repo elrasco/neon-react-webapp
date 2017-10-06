@@ -32,13 +32,15 @@ class FilterBar extends Component {
     const updatePage = pageId => {
       const pages = this.state.pages;
       const index = pages.findIndex(page => page.objectId === pageId);
-      pages[index].checked = !pages[index].checked;
-      console.log(pages);
+      if (pageId !== "all") {
+        pages[index].checked = !pages[index].checked;
+      }
       return pages;
     };
 
     const checkAndWriteFilters = () => {
       this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
+      console.log(this.checkedPages);
       writeOnStorage(this.checkedPages);
     };
 

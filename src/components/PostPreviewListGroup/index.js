@@ -20,6 +20,11 @@ class PostPreviewListGroup extends Component {
         this.setState({ post_previews: posts });
       });
   }
+  solveProsises(videos, posts) {
+    return Promise.all([videos, posts]).then(([videos, posts]) => {
+      this.setState({ video_previews: videos, post_previews: posts });
+    });
+  }
 
   componentDidMount() {
     const apiPrefix = this.props.apiPrefix;
@@ -27,9 +32,7 @@ class PostPreviewListGroup extends Component {
     const srcPosts = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + "Posts?limit=3";
     const fetchVideos = fetch(srcVideo).then(v => v.json());
     const fetchPosts = fetch(srcPosts).then(p => p.json());
-    Promise.all([fetchVideos, fetchPosts]).then(([videos, posts]) => {
-      this.setState({ video_previews: videos, post_previews: posts });
-    });
+    this.solveProsises(fetchVideos, fetchPosts);
 
     setInterval(() => {
       const storage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
@@ -37,6 +40,9 @@ class PostPreviewListGroup extends Component {
       if (storage.pages.length > 0 && currentRead !== storage.created) {
         this.filterPost(storage.pages);
         localStorage.setItem("PAGES-CHECKED-" + this.props.apiPrefix, JSON.stringify({ created: storage.created }));
+      } else if (storage.pages.length === 0 && currentRead !== storage.created) {
+        localStorage.setItem("PAGES-CHECKED-" + this.props.apiPrefix, JSON.stringify({ created: storage.created }));
+        this.solveProsises(fetchVideos, fetchPosts);
       }
     }, 500);
   }
