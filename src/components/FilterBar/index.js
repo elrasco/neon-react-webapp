@@ -15,7 +15,7 @@ const writeOnStorage = pages => {
 class FilterBar extends Component {
   constructor() {
     super();
-    this.state = { pages: [] };
+    this.state = { pages: [], allChecked: true };
     this.pages = Pages.getAll()
       .then(shrinkPages)
       .then(pages => this.setState({ pages: pages }));
@@ -25,12 +25,15 @@ class FilterBar extends Component {
     const handleInputChange = event => {
       const pageId = event.target.name;
       updatePage(pageId);
+      const somethingChecked = this.state.pages.some(page => page.checked === true);
+      somethingChecked === true ? this.setState({ allChecked: false }) : this.setState({ allChecked: true });
     };
 
     const updatePage = pageId => {
       const pages = this.state.pages;
       const index = pages.findIndex(page => page.objectId === pageId);
       pages[index].checked = !pages[index].checked;
+      console.log(pages);
       return pages;
     };
 
@@ -53,6 +56,10 @@ class FilterBar extends Component {
     return (
       <div>
         <Flex wrap style={{ maxHeight: "150px", margin: "15px" }} column>
+          <label>
+            <input name={"all"} type="checkbox" checked={this.state.allChecked} onChange={handleInputChange} />
+            All
+          </label>
           {pages}
         </Flex>
         <button style={{ margin: "15px" }} onClick={checkAndWriteFilters}>
