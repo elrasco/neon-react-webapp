@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import Pages from "../../services/Pages";
+import { createStore } from "redux";
+
+// const filter = criteria => {
+//   return {
+//     type: "FILTER",
+//     criteria
+//   };
+// };
+// const addPageAsFilter = page => {
+//   return { type: "ADD_PAGE", page };
+// };
 
 const shrinkPages = pages => {
   return pages.map(page => {
@@ -19,6 +30,7 @@ class FilterBar extends Component {
     this.pages = Pages.getAll()
       .then(shrinkPages)
       .then(pages => this.setState({ pages: pages }));
+    // store.dispatch(addPageAsFilter("77018529522"));
   }
 
   render() {
@@ -40,7 +52,6 @@ class FilterBar extends Component {
 
     const checkAndWriteFilters = () => {
       this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
-      console.log(this.checkedPages);
       writeOnStorage(this.checkedPages);
     };
 

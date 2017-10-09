@@ -17,10 +17,13 @@ class Graph extends Component {
         <h3>{this.props.title}</h3>
         <ResponsiveContainer width="98%" height={400}>
           <LineChart data={this.props.data}>
-            <XAxis domain={["auto", this.props.data]} dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} />
+            <XAxis dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} />
             <YAxis />
             <Tooltip content={<TooltipFormatter />} />
-            <Line type="monotone" dataKey="total_count" dot={false} />
+            <Line type="monotone" stroke="green" dataKey="comments_total_count" dot={false} />
+            <Line type="monotone" stroke="blue" dataKey="likes_total_count" dot={false} />
+            <Line type="monotone" stroke="orangered" dataKey="shares_total_count" dot={false} />
+            <Line type="monotone" stroke="purple" dataKey="reactions_total_count" dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </Flex>

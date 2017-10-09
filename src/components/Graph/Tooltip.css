@@ -1,10 +1,19 @@
 .custom-tooltip {
   border: 1px solid rgba(0, 0, 0, 0.5);
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 2px;
   padding: 0 15px;
 }
 
-.custom-tooltip .label {
-  color: rgba(5, 26, 181, 0.82);
+.custom-tooltip .label > div.comments {
+  color: green;
+}
+.custom-tooltip .label > div.likes {
+  color: blue;
+}
+.custom-tooltip .label > div.shares {
+  color: orangered;
+}
+.custom-tooltip .label > div.reactions {
+  color: purple;
 }
