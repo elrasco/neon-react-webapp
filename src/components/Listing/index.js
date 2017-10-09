@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
-import FilterBar from "../FilterBar";
 
 class Listing extends Component {
   constructor(props) {
@@ -13,7 +12,6 @@ class Listing extends Component {
     const apiPrefix = this.props.match.params.period;
     const apiSuffix = this.props.match.params.type === "v" ? "Videos" : "Posts";
     const src = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=100";
-    const currentRead = JSON.parse(localStorage.getItem("PAGES-CHECKED-" + apiPrefix) || "{}").created;
     if (this.localStorage.pages.length !== 0) {
       fetch(process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "/byPages/" + this.localStorage.pages.join(",") + "?limit=100")
         .then(response => response.json())

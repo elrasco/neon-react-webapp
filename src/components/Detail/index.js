@@ -47,7 +47,6 @@ class Detail extends Component {
         <Flex wrap w={1} p={2}>
           <Box w={0.8}>
             <Graph title={"Interactions"} data={this.state.series} />
-            {this.state.series.length}
           </Box>
         </Flex>
       </Flex>

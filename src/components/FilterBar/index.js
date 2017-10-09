@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import Pages from "../../services/Pages";
-import { createStore } from "redux";
 
-// const filter = criteria => {
-//   return {
-//     type: "FILTER",
-//     criteria
-//   };
-// };
-// const addPageAsFilter = page => {
-//   return { type: "ADD_PAGE", page };
-// };
+const sortByName = pages => {
+  return pages.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+};
 
 const shrinkPages = pages => {
   return pages.map(page => {
@@ -30,7 +33,6 @@ class FilterBar extends Component {
     this.pages = Pages.getAll()
       .then(shrinkPages)
       .then(pages => this.setState({ pages: pages }));
-    // store.dispatch(addPageAsFilter("77018529522"));
   }
 
   render() {
@@ -42,24 +44,37 @@ class FilterBar extends Component {
     };
 
     const updatePage = pageId => {
-      const pages = this.state.pages;
+      let pages = this.state.pages;
+      console.log(pageId);
       const index = pages.findIndex(page => page.objectId === pageId);
       if (pageId !== "all") {
         pages[index].checked = !pages[index].checked;
+      } else {
+        pages = pages.map(page => {
+          page.checked = false;
+          return page;
+        });
+        this.setState({ pages: pages });
       }
+      console.log(this.state.pages[0]);
       return pages;
     };
 
-    const checkAndWriteFilters = () => {
+    const applyFilters = () => {
       this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
       writeOnStorage(this.checkedPages);
     };
-
-    const pages = this.state.pages.map(page => {
+    const pages = sortByName(this.state.pages).map(page => {
+      console.log(this.state.pages.findIndex(p => p.objectId === page.objectId));
       return (
         <Flex key={page.objectId} align="start">
           <label>
-            <input name={page.objectId} type="checkbox" checked={this.state[page.objectId]} onChange={handleInputChange} />
+            <input
+              name={page.objectId}
+              type="checkbox"
+              checked={this.state.pages[this.state.pages.findIndex(p => p.objectId === page.objectId)].checked}
+              onChange={handleInputChange}
+            />
             {page.name}
           </label>
         </Flex>
@@ -75,7 +90,7 @@ class FilterBar extends Component {
           </label>
           {pages}
         </Flex>
-        <button style={{ margin: "15px" }} onClick={checkAndWriteFilters}>
+        <button style={{ margin: "15px" }} onClick={applyFilters}>
           Apply filters
         </button>
       </div>

@@ -6,19 +6,18 @@ import "./index.css";
 class PostPreviewListGroup extends Component {
   constructor(props) {
     super(props);
-    this.state = { video_previews: [], post_previews: [] };
+    this.state = { video_previews: [], post_previews: [], loadingPosts: false, loadingVideos: false };
     localStorage.setItem("PAGES-CHECKED", JSON.stringify({ pages: [] }));
   }
 
   filterPost(pages) {
     fetch(process.env.REACT_APP_API_URL + "/api/" + this.props.apiPrefix + "Videos/byPages/" + pages.join(",") + "?limit=3")
       .then(response => response.json())
-      .then(posts => this.setState({ video_previews: posts }));
+      .then(posts => this.setState({ video_previews: posts, loadingPosts: false }));
+
     fetch(process.env.REACT_APP_API_URL + "/api/" + this.props.apiPrefix + "Posts/byPages/" + pages.join(",") + "?limit=3")
       .then(response => response.json())
-      .then(posts => {
-        this.setState({ post_previews: posts });
-      });
+      .then(posts => this.setState({ post_previews: posts, loadingVideos: false }));
   }
   solveProsises(videos, posts) {
     return Promise.all([videos, posts]).then(([videos, posts]) => {
@@ -38,6 +37,7 @@ class PostPreviewListGroup extends Component {
       const storage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
       const currentRead = JSON.parse(localStorage.getItem("PAGES-CHECKED-" + this.props.apiPrefix) || "{}").created;
       if (storage.pages.length > 0 && currentRead !== storage.created) {
+        this.setState({ loadingPosts: true, loadingVideos: true });
         this.filterPost(storage.pages);
         localStorage.setItem("PAGES-CHECKED-" + this.props.apiPrefix, JSON.stringify({ created: storage.created }));
       } else if (storage.pages.length === 0 && currentRead !== storage.created) {
@@ -53,6 +53,7 @@ class PostPreviewListGroup extends Component {
         <Flex p={"5px"} w={"100px"} align={"center"}>
           {this.props.title}
         </Flex>
+        {(this.state.loadingPosts || this.state.loadingVideos) && <div className="loader">Loading...</div>}
         <Flex align={"center"} p={"5px"} className="PostPreviewListContainer" auto>
           <PostPreviewList data={this.state.video_previews} linkName={"more"} linkTo={"/listing/v/" + this.props.apiPrefix} w={0.5} />
           <PostPreviewList data={this.state.post_previews} type="post" linkName={"more"} linkTo={"/listing/p/" + this.props.apiPrefix} w={0.5} />
