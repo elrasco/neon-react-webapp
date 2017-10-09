@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { FormattedNumber } from "react-intl";
 class TooltipFormatter extends Component {
   render() {
-    console.log(this.props);
     const { active } = this.props;
 
     if (active) {
