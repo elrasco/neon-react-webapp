@@ -6,7 +6,7 @@ import Post from "./Post";
 class Detail extends Component {
   constructor() {
     super();
-    this.state = { post: {}, series: [] };
+    this.state = { post: {}, series: [], loading: true };
   }
   componentDidMount() {
     const apiHost = process.env.REACT_APP_API_URL;
@@ -21,26 +21,29 @@ class Detail extends Component {
       calls.push(call(r));
     });
 
-    Promise.all(calls).then(([reactions, comments, likes, shares]) => {
-      this.setState({ post: reactions.post });
-      for (let i = 0; i < reactions.data.length; i++) {
-        series.push({
-          reactions_total_count: reactions.data[i].total_count,
-          likes_total_count: likes.data[i].total_count,
-          comments_total_count: comments.data[i].total_count,
-          shares_total_count: shares.data[i].total_count,
-          created_at: reactions.data[i].created_at,
-          created_at_label: reactions.data[i].created_at_label,
-          fromTheFirst: reactions.data[i].fromTheFirst
-        });
-      }
-      this.setState({ series: series });
-    });
+    Promise.all(calls)
+      .then(([reactions, comments, likes, shares]) => {
+        this.setState({ post: reactions.post });
+        for (let i = 0; i < reactions.data.length; i++) {
+          series.push({
+            reactions_total_count: reactions.data[i].total_count,
+            likes_total_count: likes.data[i].total_count,
+            comments_total_count: comments.data[i].total_count,
+            shares_total_count: shares.data[i].total_count,
+            created_at: reactions.data[i].created_at,
+            created_at_label: reactions.data[i].created_at_label,
+            fromTheFirst: reactions.data[i].fromTheFirst
+          });
+        }
+        this.setState({ series: series });
+      })
+      .then(() => this.setState({ loading: false }));
   }
 
   render() {
     return (
       <Flex column>
+        {this.state.loading && <div className="loader">Loading</div>}
         <Box>
           <Post data={this.state.post} />
         </Box>
