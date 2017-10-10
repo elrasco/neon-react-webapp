@@ -45,7 +45,6 @@ class FilterBar extends Component {
 
     const updatePage = pageId => {
       let pages = this.state.pages;
-      console.log(pageId);
       const index = pages.findIndex(page => page.objectId === pageId);
       if (pageId !== "all") {
         pages[index].checked = !pages[index].checked;
@@ -56,7 +55,6 @@ class FilterBar extends Component {
         });
         this.setState({ pages: pages });
       }
-      console.log(this.state.pages[0]);
       return pages;
     };
 
@@ -65,7 +63,6 @@ class FilterBar extends Component {
       writeOnStorage(this.checkedPages);
     };
     const pages = sortByName(this.state.pages).map(page => {
-      console.log(this.state.pages.findIndex(p => p.objectId === page.objectId));
       return (
         <Flex key={page.objectId} align="start">
           <label>
