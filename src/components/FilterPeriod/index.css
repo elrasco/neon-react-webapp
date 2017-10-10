@@ -1,0 +1,15 @@
+.filterBox > div {
+  border: 1px solid gray;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 10px;
+}
+.filterBox {
+  width: 100%;
+  padding: 2%;
+}
+.filterBox > div > a {
+  text-decoration: none !important;
+  color: gray;
+  cursor: pointer;
+}

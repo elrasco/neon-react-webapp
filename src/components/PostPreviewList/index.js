@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Flex, Box } from "reflexbox";
 import { Link } from "react-router-dom";
 import Preview from "../Preview";
+import "./index.css";
+import StackGrid from "react-stack-grid";
 
 class PostPreviewList extends Component {
   constructor(props) {
@@ -21,7 +23,9 @@ class PostPreviewList extends Component {
           {this.props.data.length === 0 && this.state.type === "post" && <div>No posts available</div>}
           {this.props.data.length > 0 && (
             <Flex w={1} align={"center"} justify="space-around" wrap order={1}>
+              {/* <StackGrid columnWidth={150}> */}
               {previews}
+              {/* </StackGrid> */}
             </Flex>
           )}
           <Box auto justify="center" flex p={"5px"} pb={"0"} order={1}>

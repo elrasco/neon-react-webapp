@@ -1,0 +1,9 @@
+.Preview:first-child .imgBox {
+  /* width: 350px;
+  height: 350px; */
+}
+.Preview:first-child .imgBox > img {
+  /* width: 100% !important;
+  height: 100% !important;
+  object-fit: cover; */
+}

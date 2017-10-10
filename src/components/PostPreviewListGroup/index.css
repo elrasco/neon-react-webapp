@@ -1,8 +1,3 @@
-.PostPreviewListContainer > div {
-  padding: 5px;
-  border: 1px solid;
-  margin: 0 5px;
-}
 .PostPreviewList {
   position: relative;
 }

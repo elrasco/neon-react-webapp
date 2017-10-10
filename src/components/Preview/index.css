@@ -24,3 +24,23 @@ i.fa.fa-bar-chart {
   right: 0;
   top: 33px;
 }
+.imgBox > img:hover {
+  transform: scale(1.1);
+}
+.imgBox {
+  display: inline-block;
+  overflow: hidden;
+  border: 1px solid gray;
+}
+.imgBox img {
+  display: block;
+  transition: 0.4s ease-in-out;
+  padding: 10px 20px 40px 20px;
+}
+img {
+  width: "160px";
+  height: "160px";
+}
+.imgBox > div.description {
+  max-width: 150px;
+}

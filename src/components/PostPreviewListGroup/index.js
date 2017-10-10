@@ -27,7 +27,7 @@ class PostPreviewListGroup extends Component {
 
   componentDidMount() {
     const apiPrefix = this.props.apiPrefix;
-    const srcVideo = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + "Videos?limit=3";
+    const srcVideo = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + "Videos?limit=10";
     const srcPosts = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + "Posts?limit=3";
     const fetchVideos = fetch(srcVideo).then(v => v.json());
     const fetchPosts = fetch(srcPosts).then(p => p.json());
@@ -50,13 +50,10 @@ class PostPreviewListGroup extends Component {
   render() {
     return (
       <Flex>
-        <Flex p={"5px"} w={"100px"} align={"center"}>
-          {this.props.title}
-        </Flex>
         {(this.state.loadingPosts || this.state.loadingVideos) && <div className="loader">Loading...</div>}
         <Flex align={"center"} p={"5px"} className="PostPreviewListContainer" auto>
-          <PostPreviewList data={this.state.video_previews} linkName={"more"} linkTo={"/listing/v/" + this.props.apiPrefix} w={0.5} />
-          <PostPreviewList data={this.state.post_previews} type="post" linkName={"more"} linkTo={"/listing/p/" + this.props.apiPrefix} w={0.5} />
+          <PostPreviewList data={this.state.video_previews} linkName={"more"} linkTo={"/listing/v/" + this.props.apiPrefix} w={1} />
+          {/* <PostPreviewList data={this.state.post_previews} type="post" linkName={"more"} linkTo={"/listing/p/" + this.props.apiPrefix} w={0.5} /> */}
         </Flex>
       </Flex>
     );
