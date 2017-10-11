@@ -43,7 +43,7 @@ class Listing extends Component {
     console.log(type);
     return (
       <div>
-        <FilterPeriod period={period} />
+        <FilterPeriod period={period} type={type} />
         <PostPreviewList data={this.state.previews} type={type} />
       </div>
     );

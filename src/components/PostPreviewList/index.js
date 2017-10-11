@@ -10,9 +10,11 @@ class PostPreviewList extends Component {
     super(props);
     this.state = { previews: this.props.data, type: props.type || "video" };
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ type: nextProps.type });
+  }
   render() {
-    if (this.props.data.length > 0) {
-      console.log(this.props.data[0].post, this.state.type);
+    if (this.props.data.some(data => data[this.state.type])) {
       this.previews = this.props.data.map(p => {
         return <Preview auto key={p[this.state.type].objectId} object={p} type={this.state.type} />;
       });

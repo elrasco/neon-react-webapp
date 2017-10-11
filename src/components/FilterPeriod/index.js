@@ -31,6 +31,7 @@ class FilterPeriod extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.switchPeriod(nextProps);
+    nextProps.type === "video" ? this.setState({ type: "v", videos: "highlighted", posts: "" }) : this.setState({ type: "p", videos: "", posts: "highlighted" });
   }
 
   render() {
@@ -50,12 +51,12 @@ class FilterPeriod extends Component {
           <Link to={"/listing/" + this.state.type + "/thirtyD"}>Last 30 days</Link>
         </div>
         <div className="title">Type:</div>
-        {/* <div className={this.state.videos}>
+        <div className={this.state.videos}>
           <Link to={"/listing/v/" + this.props.period}>Videos</Link>
         </div>
         <div className={this.state.posts}>
           <Link to={"/listing/p/" + this.props.period}>Posts</Link>
-        </div> */}
+        </div>
       </Flex>
     );
   }
