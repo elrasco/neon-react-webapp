@@ -37,10 +37,13 @@ class Listing extends Component {
   }
 
   render() {
-    const type = this.props.match.params.type === "v" ? "video" : "post";
+    const period = this.props.match.params.period;
+    let type = "";
+    this.props.match.params.type === "v" ? (type = "video") : (type = "post");
+    console.log(type);
     return (
       <div>
-        <FilterPeriod />
+        <FilterPeriod period={period} />
         <PostPreviewList data={this.state.previews} type={type} />
       </div>
     );

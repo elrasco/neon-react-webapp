@@ -11,8 +11,11 @@ const Preview = props => {
   let picture = content => content.picture || get_rnd_thumb();
   return (
     <Flex column {...props} className="Preview">
-      <Box>{obj.diff}</Box>
       <Links image={picture(content)} data={props} content={content} />
+      <Flex className="reactions" justify="start">
+        <i className="fa fa-eye" aria-hidden="false" />
+        <Box>{obj.diff}</Box>
+      </Flex>
     </Flex>
   );
 };

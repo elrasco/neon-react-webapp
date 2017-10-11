@@ -1,6 +1,9 @@
 .Preview > div {
-  margin: auto;
+  width: 100%;
   position: relative;
+}
+.Preview {
+  border: 1px solid gray;
 }
 i.fa.fa-bar-chart {
   display: block;
@@ -31,15 +34,23 @@ i.fa.fa-bar-chart {
   display: inline-block;
   overflow: hidden;
   border: 1px solid gray;
+  width: 100%;
 }
 .imgBox img {
   display: block;
   transition: 0.4s ease-in-out;
 }
 img {
-  max-width: 160px;
+  width: 100%;
 }
 div.description {
-  max-width: 150px;
-  margin: 10px auto;
+  padding: 10px;
+}
+.reactions {
+  padding: 0 10px 20px 10px;
+  color: gray;
+}
+.reactions > i {
+  width: 20px !important;
+  height: 20px !important;
 }

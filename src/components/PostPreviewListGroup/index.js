@@ -53,7 +53,6 @@ class PostPreviewListGroup extends Component {
         {(this.state.loadingPosts || this.state.loadingVideos) && <div className="loader">Loading...</div>}
         <Flex align={"center"} p={"5px"} className="PostPreviewListContainer" auto>
           <PostPreviewList data={this.state.video_previews} linkName={"more"} linkTo={"/listing/v/" + this.props.apiPrefix} w={1} />
-          {/* <PostPreviewList data={this.state.post_previews} type="post" linkName={"more"} linkTo={"/listing/p/" + this.props.apiPrefix} w={0.5} /> */}
         </Flex>
       </Flex>
     );
