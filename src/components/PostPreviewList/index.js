@@ -21,13 +21,7 @@ class PostPreviewList extends Component {
           {!this.props.data && <div>Loading</div>}
           {this.props.data.length === 0 && this.state.type === "video" && <div>No videos available</div>}
           {this.props.data.length === 0 && this.state.type === "post" && <div>No posts available</div>}
-          {this.props.data.length > 0 && (
-            <Flex w={1} align={"center"} justify="space-around" wrap order={1}>
-              {/* <StackGrid columnWidth={150}> */}
-              {previews}
-              {/* </StackGrid> */}
-            </Flex>
-          )}
+          {this.props.data.length > 0 && <StackGrid columnWidth={200}>{previews}</StackGrid>}
           <Box auto justify="center" flex p={"5px"} pb={"0"} order={1}>
             {this.props.linkTo && <Link to={this.props.linkTo}>{this.props.linkName}</Link>}
           </Box>

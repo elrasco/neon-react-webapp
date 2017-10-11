@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Box } from "reflexbox";
-import Links from './Links';
+import Links from "./Links";
 import "./index.css";
 
 const Preview = props => {
@@ -12,7 +12,7 @@ const Preview = props => {
   return (
     <Flex column {...props} className="Preview">
       <Box>{obj.diff}</Box>
-      <Links image={picture(content)} data={props} content={content}/>
+      <Links image={picture(content)} data={props} content={content} />
     </Flex>
   );
 };

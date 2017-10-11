@@ -4,12 +4,13 @@ import "./index.css";
 
 class Links extends Component {
   render() {
-    console.log(this.props);
     return (
       <Box>
-        <Flex className="imgBox" column justify="space-around" align="center">
-          <img src={this.props.image} alt="" />
-          <div className="description">{this.props.content.description}</div>
+        <Flex column justify="space-around" align="center">
+          <Flex column className="imgBox">
+            <img src={this.props.image} alt="" />
+          </Flex>
+          <div className="description">{this.props.content.title || this.props.content.description}</div>
         </Flex>
         <a href={"/detail/" + this.props.data.type + "/" + this.props.content.objectId} target="_blank">
           <i className="fa fa-bar-chart" aria-hidden="true" />
