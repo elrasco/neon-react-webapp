@@ -37,7 +37,6 @@ class FilterPeriod extends Component {
   render() {
     return (
       <Flex className="filterBox" justify="center">
-        <div className="title"> Period:</div>
         <div className={this.state.today}>
           <Link to={"/listing/" + this.state.type + "/today"}>Today</Link>
         </div>
@@ -50,8 +49,7 @@ class FilterPeriod extends Component {
         <div className={this.state.thirtyD}>
           <Link to={"/listing/" + this.state.type + "/thirtyD"}>Last 30 days</Link>
         </div>
-        <div className="title">Type:</div>
-        <div className={this.state.videos}>
+        <div className={this.state.videos + " first_period"}>
           <Link to={"/listing/v/" + this.props.period}>Videos</Link>
         </div>
         <div className={this.state.posts}>

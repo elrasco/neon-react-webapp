@@ -14,8 +14,14 @@
   cursor: pointer;
 }
 .highlighted {
-  background-color: rgba(230, 126, 34, 0.4);
+  background-color: rgba(255, 124, 70, 1);
+}
+.highlighted > a {
+  color: white !important;
 }
 .filterBox > div.title {
   padding: 5px 10px;
+}
+.first_period {
+  margin-left: 50px !important;
 }

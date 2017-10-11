@@ -16,6 +16,7 @@ class PostPreviewList extends Component {
   render() {
     if (this.props.data.some(data => data[this.state.type])) {
       this.previews = this.props.data.map(p => {
+        console.log(p);
         return <Preview auto key={p[this.state.type].objectId} object={p} type={this.state.type} />;
       });
     }
@@ -27,7 +28,7 @@ class PostPreviewList extends Component {
           {this.props.data.length === 0 && this.state.type === "video" && <div>No videos available</div>}
           {this.props.data.length === 0 && this.state.type === "post" && <div>No posts available</div>}
           {this.props.data.length > 0 && (
-            <StackGrid gutterWidth={20} gutterHeight={20} columnWidth={260}>
+            <StackGrid gutterWidth={20} gutterHeight={20} columnWidth={260} monitorImagesLoaded={true}>
               {this.previews}
             </StackGrid>
           )}

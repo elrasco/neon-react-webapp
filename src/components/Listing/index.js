@@ -5,7 +5,7 @@ import FilterPeriod from "./../FilterPeriod";
 const loadContent = context => {
   const apiPrefix = context.props.match.params.period;
   const apiSuffix = context.props.match.params.type === "v" ? "Videos" : "Posts";
-  const src = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=100";
+  const src = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=20";
   if (context.localStorage.pages.length !== 0) {
     fetch(process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "/byPages/" + context.localStorage.pages.join(",") + "?limit=100")
       .then(response => response.json())

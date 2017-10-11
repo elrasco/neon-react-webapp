@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Listing from "./components/Listing";
 import Detail from "./components/Detail";
@@ -10,7 +10,9 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact={true} path={"/"} component={Home} />
+          <Switch>
+            <Redirect exact from="/" to="/listing/v/today" />
+          </Switch>
           <Route exact={true} path={"/listing/:type/:period"} component={Listing} />
           <Route exact={true} path={"/detail/:type/:objectId"} component={Detail} />
         </div>
