@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import { Link } from "react-router-dom";
 import "./index.css";
+import FilterPages from "./../FilterPages";
+import { observer } from "mobx-react";
+
+@observer
 class FilterPeriod extends Component {
   constructor(props) {
     super(props);
-    this.state = { today: "", yesterday: "", sevenD: "", thirtyD: "", videos: "", posts: "", period: "today", type: "v" };
+    this.areFiltersShown = false;
+    localStorage.setItem("VISIBLE-FILTERS", JSON.stringify(this.areFiltersShown));
+    this.state = { today: "", yesterday: "", sevenD: "", thirtyD: "", videos: "", posts: "", period: "today", type: "v", showFilters: "" };
     this.switchPeriod = (nextProps = {}) => {
       const period = this.props.period || nextProps.period;
       switch (period) {
@@ -26,6 +32,7 @@ class FilterPeriod extends Component {
       }
     };
   }
+
   componentDidMount() {
     this.switchPeriod();
   }
@@ -35,26 +42,38 @@ class FilterPeriod extends Component {
   }
 
   render() {
+    console.log("---------------------", this.props);
+    const toggleFilters = () => {
+      this.areFiltersShown = !this.areFiltersShown;
+      localStorage.setItem("VISIBLE-FILTERS", JSON.stringify(this.areFiltersShown));
+      this.areFiltersShown ? this.setState({ showFilters: "highlighted" }) : this.setState({ showFilters: "" });
+    };
     return (
-      <Flex className="filterBox" justify="center">
-        <div className={this.state.today}>
-          <Link to={"/listing/" + this.state.type + "/today"}>Today</Link>
-        </div>
-        <div className={this.state.yesterday}>
-          <Link to={"/listing/" + this.state.type + "/yesterday"}>Yesterday</Link>
-        </div>
-        <div className={this.state.sevenD}>
-          <Link to={"/listing/" + this.state.type + "/sevenD"}>Last 7 days</Link>
-        </div>
-        <div className={this.state.thirtyD}>
-          <Link to={"/listing/" + this.state.type + "/thirtyD"}>Last 30 days</Link>
-        </div>
-        <div className={this.state.videos + " first_period"}>
-          <Link to={"/listing/v/" + this.props.period}>Videos</Link>
-        </div>
-        <div className={this.state.posts}>
-          <Link to={"/listing/p/" + this.props.period}>Posts</Link>
-        </div>
+      <Flex>
+        <Flex className="filterBox" justify="center">
+          <div className={this.state.today}>
+            <Link to={"/listing/" + this.state.type + "/today"}>Today</Link>
+          </div>
+          <div className={this.state.yesterday}>
+            <Link to={"/listing/" + this.state.type + "/yesterday"}>Yesterday</Link>
+          </div>
+          <div className={this.state.sevenD}>
+            <Link to={"/listing/" + this.state.type + "/sevenD"}>Last 7 days</Link>
+          </div>
+          <div className={this.state.thirtyD}>
+            <Link to={"/listing/" + this.state.type + "/thirtyD"}>Last 30 days</Link>
+          </div>
+          <div className={this.state.videos + " first_period"}>
+            <Link to={"/listing/v/" + this.props.period}>Videos</Link>
+          </div>
+          <div className={this.state.posts}>
+            <Link to={"/listing/p/" + this.props.period}>Posts</Link>
+          </div>
+          <div className={this.state.showFilters + " moreFilters"}>
+            <div onClick={toggleFilters}>More filters</div>
+          </div>
+        </Flex>
+        <Flex>{this.state.showFilters && <FilterPages />}</Flex>
       </Flex>
     );
   }

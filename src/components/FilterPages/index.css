@@ -1,0 +1,29 @@
+.FilterPages {
+  border: 1px solid gray;
+  position: absolute;
+  left: 0;
+  top: 80px;
+  width: 98%;
+  z-index: 100;
+  background-color: white;
+  padding: 20px;
+}
+.pages-container {
+  max-height: 300px;
+}
+.input-container > label > input[type="checkbox"] {
+  margin: 10px 10px 0 0;
+}
+button.apply {
+  background-color: white;
+  border: 1px solid gray;
+  float: right;
+  padding: 10px;
+  text-transform: uppercase;
+}
+button.apply:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}

@@ -14,8 +14,21 @@ class Links extends Component {
 
   getPage() {
     if (this.pages) {
-      this.pageName = this.pages.filter(page => page.objectId === this.props.publisher.page_id).map(page => page.name);
-      this.pageImage = this.pages.filter(page => page.objectId === this.props.publisher.page_id).map(page => page.picture);
+      if (this.props.publisher.post) {
+        this.pageName = this.pages
+          .filter(page => (this.props.publisher.post.page_id ? page.objectId === this.props.publisher.post.page_id : page.objectId === this.props.publisher.page_id))
+          .map(page => page.name);
+        this.pageImage = this.pages
+          .filter(page => (this.props.publisher.post.page_id ? page.objectId === this.props.publisher.post.page_id : page.objectId === this.props.publisher.page_id))
+          .map(page => page.picture);
+      } else if (this.props.publisher.video) {
+        this.pageName = this.pages
+          .filter(page => (this.props.publisher.video.page_id ? page.objectId === this.props.publisher.video.page_id : page.objectId === this.props.publisher.page_id))
+          .map(page => page.name);
+        this.pageImage = this.pages
+          .filter(page => (this.props.publisher.video.page_id ? page.objectId === this.props.publisher.video.page_id : page.objectId === this.props.publisher.page_id))
+          .map(page => page.picture);
+      }
     }
   }
 
@@ -31,7 +44,7 @@ class Links extends Component {
             <img src={this.pageImage} alt="" />
             {this.pageName}
           </Flex>
-          <div className="description">{this.props.content.title || this.props.content.description || this.props.content.message}</div>
+          <div className="description">{this.props.content.title || this.props.content.message}</div>
         </Flex>
         <a href={"/detail/" + this.props.data.type + "/" + this.props.content.objectId} target="_blank">
           <i className="fa fa-bar-chart" aria-hidden="true" />

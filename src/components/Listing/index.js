@@ -7,7 +7,7 @@ const loadContent = context => {
   const apiSuffix = context.props.match.params.type === "v" ? "Videos" : "Posts";
   const src = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=20";
   if (context.localStorage.pages.length !== 0) {
-    fetch(process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "/byPages/" + context.localStorage.pages.join(",") + "?limit=100")
+    fetch(process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "/byPages/" + context.localStorage.pages.join(",") + "?limit=20")
       .then(response => response.json())
       .then(posts => {
         context.setState({ previews: posts });
@@ -27,7 +27,6 @@ class Listing extends Component {
     this.state = { previews: [] };
     this.localStorage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
   }
-
   componentDidMount() {
     loadContent(this);
   }
@@ -40,7 +39,6 @@ class Listing extends Component {
     const period = this.props.match.params.period;
     let type = "";
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
-    console.log(type);
     return (
       <div>
         <FilterPeriod period={period} type={type} />

@@ -16,7 +16,6 @@ class PostPreviewList extends Component {
   render() {
     if (this.props.data.some(data => data[this.state.type])) {
       this.previews = this.props.data.map(p => {
-        console.log(p);
         return <Preview auto key={p[this.state.type].objectId} object={p} type={this.state.type} />;
       });
     }

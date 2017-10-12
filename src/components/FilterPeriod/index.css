@@ -19,9 +19,16 @@
 .highlighted > a {
   color: white !important;
 }
+.highlighted > div {
+  color: white !important;
+}
 .filterBox > div.title {
   padding: 5px 10px;
 }
 .first_period {
   margin-left: 50px !important;
+}
+.moreFilters {
+  margin-left: 50px !important;
+  color: gray;
 }
