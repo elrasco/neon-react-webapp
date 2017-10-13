@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import Pages from "../../services/Pages";
 import "./index.css";
-import "mobx-react";
-import { observable, autorun } from "mobx";
+import PubSub from "pubsub-js";
 
 const sortByName = pages => {
   return pages.sort((a, b) => {
@@ -40,12 +39,15 @@ class FilterPages extends Component {
     this.pages = Pages.getAll()
       .then(shrinkPages)
       .then(pages => this.setState({ pages: pages, allChecked: !pages.some(page => page.checked === true) }));
-    autorun(() => {
-      console.log(this.checkedPages.filter(p => !!p));
-    });
+    this.applyFilters = this.applyFilters.bind(this);
   }
 
-  @observable checkedPages = [];
+  applyFilters() {
+    this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
+    writeOnStorage(this.checkedPages);
+    PubSub.publish("UPDATE_PREVIEWS", this.checkedPages);
+  }
+
   render() {
     const handleInputChange = event => {
       const pageId = event.target.name;
@@ -69,10 +71,6 @@ class FilterPages extends Component {
       return pages;
     };
 
-    const applyFilters = () => {
-      this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
-      writeOnStorage(this.checkedPages);
-    };
     const pages = sortByName(this.state.pages).map(page => {
       return (
         <Flex className="input-container" key={page.objectId}>
@@ -100,7 +98,7 @@ class FilterPages extends Component {
           </div>
           {pages}
         </Flex>
-        <button className="apply" onClick={applyFilters}>
+        <button className="apply" onClick={this.applyFilters}>
           Apply filters
         </button>
       </div>

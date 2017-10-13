@@ -3,9 +3,7 @@ import { Flex } from "reflexbox";
 import { Link } from "react-router-dom";
 import "./index.css";
 import FilterPages from "./../FilterPages";
-import { observer } from "mobx-react";
 
-@observer
 class FilterPeriod extends Component {
   constructor(props) {
     super(props);
@@ -42,12 +40,12 @@ class FilterPeriod extends Component {
   }
 
   render() {
-    console.log("---------------------", this.props);
     const toggleFilters = () => {
       this.areFiltersShown = !this.areFiltersShown;
       localStorage.setItem("VISIBLE-FILTERS", JSON.stringify(this.areFiltersShown));
       this.areFiltersShown ? this.setState({ showFilters: "highlighted" }) : this.setState({ showFilters: "" });
     };
+
     return (
       <Flex>
         <Flex className="filterBox" justify="center">

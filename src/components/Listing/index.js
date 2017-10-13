@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
 import FilterPeriod from "./../FilterPeriod";
+import PubSub from "pubsub-js";
 
 const loadContent = context => {
   const apiPrefix = context.props.match.params.period;
@@ -20,22 +21,43 @@ const loadContent = context => {
       });
   }
 };
-
 class Listing extends Component {
   constructor(props) {
     super(props);
     this.state = { previews: [] };
     this.localStorage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
   }
+
   componentDidMount() {
+    PubSub.publish("UPDATE_PREVIEWS", this.localStorage.pages);
     loadContent(this);
   }
   componentWillReceiveProps(nextProps) {
     this.props = nextProps;
+    this.localStorage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
+    console.log(this.localStorage.pages);
+    PubSub.publish("UPDATE_PREVIEWS", this.localStorage.pages);
     loadContent(this);
   }
 
+  mySubscriber = (msg, data) => {
+    data = data.filter(d => !!d);
+    const apiPrefix = this.props.match.params.period;
+    const apiSuffix = this.props.match.params.type === "v" ? "Videos" : "Posts";
+    const src = process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "?limit=20";
+    if (data.length !== 0) {
+      fetch(process.env.REACT_APP_API_URL + "/api/" + apiPrefix + apiSuffix + "/byPages/" + data.join(",") + "?limit=20")
+        .then(response => response.json())
+        .then(response => this.setState({ previews: response }));
+    } else {
+      fetch(src)
+        .then(response => response.json())
+        .then(response => this.setState({ previews: response }));
+    }
+  };
+
   render() {
+    const token = PubSub.subscribe("UPDATE_PREVIEWS", this.mySubscriber);
     const period = this.props.match.params.period;
     let type = "";
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
