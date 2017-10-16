@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import Pages from "../../services/Pages";
 import "./index.css";
-import PubSub from "pubsub-js";
+import { observer, inject } from "mobx-react";
 
 const sortByName = pages => {
   return pages.sort((a, b) => {
@@ -32,20 +32,28 @@ const writeOnStorage = pages => {
   localStorage.setItem("VISIBLE-FILTERS", JSON.stringify(false));
 };
 
+@inject("store")
+@observer
 class FilterPages extends Component {
   constructor() {
     super();
     this.state = { pages: [], allChecked: true };
     this.pages = Pages.getAll()
       .then(shrinkPages)
-      .then(pages => this.setState({ pages: pages, allChecked: !pages.some(page => page.checked === true) }));
+      .then(pages => {
+        this.props.store.setPages(pages);
+        this.setState({
+          pages: pages,
+          allChecked: !pages.some(page => page.checked === true)
+        });
+      });
     this.applyFilters = this.applyFilters.bind(this);
   }
 
   applyFilters() {
     this.checkedPages = this.state.pages.filter(page => page.checked === true).map(page => page.objectId);
+    this.props.store.filterPages(this.checkedPages);
     writeOnStorage(this.checkedPages);
-    PubSub.publish("UPDATE_PREVIEWS", this.checkedPages);
   }
 
   render() {

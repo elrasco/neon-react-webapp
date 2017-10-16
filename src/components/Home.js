@@ -1,13 +1,13 @@
 import React from "react";
 import PostPreviewListGroup from "./PostPreviewListGroup";
-import FilterPeriod from "./FilterPeriod";
+import FilterBar from "./FilterBar";
 import FilterPages from "./FilterPages";
 import { Flex } from "reflexbox";
 
 const Home = props => (
   <Flex column>
     <FilterPages />
-    <FilterPeriod period="today" />
+    <FilterBar period="today" />
     <PostPreviewListGroup title={"Today"} apiPrefix={"today"} />
   </Flex>
 );

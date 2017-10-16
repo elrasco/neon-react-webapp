@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
-import FilterPeriod from "./../FilterPeriod";
-import PubSub from "pubsub-js";
+import FilterBar from "./../FilterBar";
 
 const loadContent = context => {
   const apiPrefix = context.props.match.params.period;
@@ -29,14 +28,11 @@ class Listing extends Component {
   }
 
   componentDidMount() {
-    PubSub.publish("UPDATE_PREVIEWS", this.localStorage.pages);
     loadContent(this);
   }
   componentWillReceiveProps(nextProps) {
     this.props = nextProps;
     this.localStorage = JSON.parse(localStorage.getItem("PAGES-CHECKED"));
-    console.log(this.localStorage.pages);
-    PubSub.publish("UPDATE_PREVIEWS", this.localStorage.pages);
     loadContent(this);
   }
 
@@ -57,13 +53,12 @@ class Listing extends Component {
   };
 
   render() {
-    const token = PubSub.subscribe("UPDATE_PREVIEWS", this.mySubscriber);
     const period = this.props.match.params.period;
     let type = "";
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
     return (
       <div>
-        <FilterPeriod period={period} type={type} />
+        <FilterBar period={period} type={type} />
         <PostPreviewList data={this.state.previews} type={type} />
       </div>
     );

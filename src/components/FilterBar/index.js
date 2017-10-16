@@ -3,8 +3,11 @@ import { Flex } from "reflexbox";
 import { Link } from "react-router-dom";
 import "./index.css";
 import FilterPages from "./../FilterPages";
+import { observer, inject } from "mobx-react";
 
-class FilterPeriod extends Component {
+@inject("store")
+@observer
+class FilterBar extends Component {
   constructor(props) {
     super(props);
     this.areFiltersShown = false;
@@ -38,7 +41,6 @@ class FilterPeriod extends Component {
     this.switchPeriod(nextProps);
     nextProps.type === "video" ? this.setState({ type: "v", videos: "highlighted", posts: "" }) : this.setState({ type: "p", videos: "", posts: "highlighted" });
   }
-
   render() {
     const toggleFilters = () => {
       this.areFiltersShown = !this.areFiltersShown;
@@ -77,4 +79,4 @@ class FilterPeriod extends Component {
   }
 }
 
-export default FilterPeriod;
+export default FilterBar;
