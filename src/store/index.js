@@ -26,6 +26,7 @@ class Store {
   @observable filters = { type: "", period: "", selectedPages: [] };
   @observable previews = [];
   @observable allChecked;
+  @observable location;
   @observable appliedFilters = true;
   constructor() {
     Pages.getAll()
@@ -38,6 +39,8 @@ class Store {
   }
 
   // actions
+  @action getLocation = location => (this.location = location);
+
   @action
   changeFilters = filters => {
     this.filters = filters;
@@ -52,6 +55,7 @@ class Store {
   fetch = () => {
     const period = this.filters.period;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
+    console.log(this.filters);
     if (this.filters.selectedPages.length === 0) {
       fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?limit=20")
         .then(response => response.json())

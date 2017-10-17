@@ -15,7 +15,7 @@ class App extends Component {
             <Switch>
               <Redirect exact from="/" to="/listing/v/today" />
             </Switch>
-            <Route exact={true} path={"/listing/:type/:period"} component={Listing} />
+            <Route exact={true} path={"/listing/:type/:period"} search="?pages=:data" component={Listing} />
             <Route exact={true} path={"/detail/:type/:objectId"} component={Detail} />
           </div>
         </Router>

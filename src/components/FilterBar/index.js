@@ -30,22 +30,22 @@ class FilterBar extends Component {
       <Flex>
         <Flex className="filterBox" justify="center">
           <div className={this.props.store.filters.period === "today" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/today"}>Today</Link>
+            <Link to={"/listing/" + this.props.store.filters.type + "/today?" + this.props.store.location.search}>Today</Link>
           </div>
           <div className={this.props.store.filters.period === "yesterday" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/yesterday"}>Yesterday</Link>
+            <Link to={"/listing/" + this.props.store.filters.type + "/yesterday?" + this.props.store.location.search}>Yesterday</Link>
           </div>
           <div className={this.props.store.filters.period === "sevenD" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/sevenD"}>Last 7 days</Link>
+            <Link to={"/listing/" + this.props.store.filters.type + "/sevenD?" + this.props.store.location.search}>Last 7 days</Link>
           </div>
           <div className={this.props.store.filters.period === "thirtyD" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/thirtyD"}>Last 30 days</Link>
+            <Link to={"/listing/" + this.props.store.filters.type + "/thirtyD?" + this.props.store.location.search}>Last 30 days</Link>
           </div>
           <div className={this.props.store.filters.type === "v" ? "highlighted first_period" : "first_period"}>
-            <Link to={"/listing/v/" + this.props.period}>Videos</Link>
+            <Link to={"/listing/v/" + this.props.period + "?" + this.props.store.location.search}>Videos</Link>
           </div>
           <div className={this.props.store.filters.type === "p" ? "highlighted" : ""}>
-            <Link to={"/listing/p/" + this.props.period}>Posts</Link>
+            <Link to={"/listing/p/" + this.props.period + "?" + this.props.store.location.search}>Posts</Link>
           </div>
           <div className={!this.props.store.appliedFilters ? "highlighted moreFilters" : "moreFilters"}>
             <div onClick={toggleFilters}>More filters</div>
