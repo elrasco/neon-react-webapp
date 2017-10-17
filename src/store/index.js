@@ -23,6 +23,10 @@ const shrinkPages = pages => {
 class Store {
   // variables
   @observable pages;
+  @observable filters = { type: "", period: "", selectedPages: [] };
+  @observable previews = [];
+  @observable allChecked;
+  @observable appliedFilters = true;
   constructor() {
     Pages.getAll()
       .then(shrinkPages)
@@ -32,10 +36,6 @@ class Store {
         return (this.pages = res);
       });
   }
-  @observable filters = { type: "", period: "", selectedPages: [] };
-  @observable previews = [];
-  @observable allChecked;
-  @observable appliedFilters = true;
 
   // actions
   @action
@@ -82,7 +82,7 @@ class Store {
         page.checked = false;
         return page;
       });
-      this.setPages(this.pages);
+      this.filters.selectedPages = this.pages;
     }
     return this.pages;
   };

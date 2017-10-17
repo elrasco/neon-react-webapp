@@ -8,8 +8,8 @@ import { observer, inject } from "mobx-react";
 @inject("store")
 @observer
 class FilterBar extends Component {
-  componentWillReceiveProps(nextProps) {
-    nextProps.type === "video"
+  componentDidMount(nextProps) {
+    this.props.type === "video"
       ? this.props.store.changeFilters({
           type: "v",
           period: this.props.store.filters.period,
