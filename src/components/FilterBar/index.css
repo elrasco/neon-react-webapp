@@ -32,3 +32,19 @@
   margin-left: 50px !important;
   color: gray;
 }
+.tagsContainer {
+  margin: 15px;
+}
+.tagsContainer i {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.tagsContainer > div {
+  padding: 8px 10px;
+  margin: 10px 10px;
+  background-color: rgb(42, 148, 85);
+  color: white;
+  border: 1px solid rgb(42, 148, 85);
+  border-radius: 15px;
+  font-size: 15px;
+}

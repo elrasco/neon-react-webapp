@@ -9,8 +9,10 @@ import queryString from "query-string";
 class Listing extends Component {
   constructor(props) {
     super(props);
-    this.props.store.getLocation(this.props.location);
-    this.queryParamParsed = queryString.parse(this.props.store.location.search).pages || [];
+    this.props.store.history = this.props.history;
+    this.props.location.search === "" || this.props.location.search === "?pages="
+      ? (this.queryParamParsed = [])
+      : (this.queryParamParsed = queryString.parse(this.props.location.search).pages.split(","));
     this.props.store.changeFilters({
       type: this.props.match.params.type,
       period: this.props.match.params.period,
@@ -18,6 +20,9 @@ class Listing extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
+    nextProps.location.search === "" || nextProps.location.search === "?pages="
+      ? (this.queryParamParsed = [])
+      : (this.queryParamParsed = queryString.parse(nextProps.location.search).pages.split(","));
     this.props.store.changeFilters({
       type: nextProps.match.params.type,
       period: nextProps.match.params.period,
@@ -31,6 +36,7 @@ class Listing extends Component {
     return (
       <div>
         <FilterBar period={this.props.match.params.period} type={type} />
+        {this.props.store.loader && <div className="loader">Loading</div>}
         <PostPreviewList data={this.props.store.previews} type={type} period={this.props.match.params.period} />
       </div>
     );

@@ -25,70 +25,51 @@ class Store {
   @observable pages;
   @observable filters = { type: "", period: "", selectedPages: [] };
   @observable previews = [];
-  @observable allChecked;
-  @observable location;
-  @observable appliedFilters = true;
+  @observable loader;
+  @observable history;
+  @observable showPagesFilters = false;
   constructor() {
     Pages.getAll()
       .then(shrinkPages)
       .then(sortByName)
       .then(res => {
-        this.setAllChecked(!res.some(page => page.checked === true));
         return (this.pages = res);
       });
   }
 
   // actions
-  @action getLocation = location => (this.location = location);
 
   @action
-  changeFilters = filters => {
-    this.filters = filters;
-    this.fetch();
+  changeFilters = (filters, fetch = true) => {
+    this.filters = Object.assign({}, this.filters, filters);
+    if (fetch) this.fetch();
   };
 
   @action
-  setFilterApplied = () => {
-    this.appliedFilters = !this.appliedFilters;
+  setPagesChecked = pages => {
+    this.filters.selectedPages = pages;
   };
+
   @action
   fetch = () => {
     const period = this.filters.period;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
-    console.log(this.filters);
+    this.loader = true;
     if (this.filters.selectedPages.length === 0) {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?limit=20")
+      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?limit=40")
         .then(response => response.json())
         .then(response => {
           this.previews = response;
+          this.loader = false;
         });
     } else {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "/byPages/" + this.filters.selectedPages.join(",") + "?limit=20")
+      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "/byPages/" + this.filters.selectedPages.join(",") + "?limit=40")
         .then(response => response.json())
         .then(response => {
           this.previews = response;
+          this.loader = false;
         });
     }
-  };
-
-  @action
-  setAllChecked = bool => {
-    this.allChecked = bool;
-  };
-
-  @action
-  checkPages = pageId => {
-    const index = this.pages.findIndex(page => page.objectId === pageId);
-    if (pageId !== "all") {
-      this.pages[index].checked = !this.pages[index].checked;
-    } else {
-      this.pages = this.pages.map(page => {
-        page.checked = false;
-        return page;
-      });
-      this.filters.selectedPages = this.pages;
-    }
-    return this.pages;
   };
 }
 export default new Store();
