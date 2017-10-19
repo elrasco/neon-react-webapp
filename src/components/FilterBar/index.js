@@ -27,7 +27,7 @@ class FilterBar extends Component {
     this.props.store.history.push(window.location.pathname + "?" + newSearch);
   };
   render() {
-    if (this.props.store.pages) {
+    if (this.props.store.pages && window.location.search !== "") {
       this.tags = this.props.store.pages
         .filter(page =>
           queryString
