@@ -11,18 +11,7 @@ import queryString from "query-string";
 @observer
 class FilterBar extends Component {
   componentDidMount(nextProps) {
-    console.log(ReactDOM.findDOMNode());
-    this.props.type === "video"
-      ? this.props.store.changeFilters({
-          type: "v",
-          period: this.props.store.filters.period,
-          selectedPages: this.props.store.filters.selectedPages
-        })
-      : this.props.store.changeFilters({
-          type: "p",
-          period: this.props.store.filters.period,
-          selectedPages: this.props.store.filters.selectedPages
-        });
+    this.props.type === "video" ? this.props.store.changeFilters({ type: "v" }) : this.props.store.changeFilters({ type: "p" });
   }
   toggleFilters = () => {
     this.props.store.showPagesFilters = !this.props.store.showPagesFilters;
@@ -35,7 +24,7 @@ class FilterBar extends Component {
     let pagesFromQueryString = queryString.parse(window.location.search).pages.split(",");
     pagesFromQueryString.splice(pagesFromQueryString.findIndex(p => p === pageId), 1);
     let newSearch = "pages=" + pagesFromQueryString.toString();
-    window.location.search = newSearch;
+    this.props.store.history.push(window.location.pathname + "?" + newSearch);
   };
   render() {
     if (this.props.store.pages) {
@@ -48,7 +37,7 @@ class FilterBar extends Component {
         )
         .map(page => {
           return (
-            <Flex>
+            <Flex key={page.objectId}>
               <div>{page.name}</div>
               <div onClick={() => this.removeFilter(page.objectId)}>
                 <i className="fa fa-times" aria-hidden="true" />

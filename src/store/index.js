@@ -38,16 +38,10 @@ class Store {
   }
 
   // actions
-
   @action
   changeFilters = (filters, fetch = true) => {
     this.filters = Object.assign({}, this.filters, filters);
     if (fetch) this.fetch();
-  };
-
-  @action
-  setPagesChecked = pages => {
-    this.filters.selectedPages = pages;
   };
 
   @action
