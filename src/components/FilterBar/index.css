@@ -1,3 +1,8 @@
+.filterBar > div:first-child {
+  padding: 0 3%;
+  background-color: rgba(255, 124, 70, 0.5);
+}
+
 .filterBox > div:not(.title) {
   border: 1px solid gray;
   cursor: pointer;
@@ -5,7 +10,7 @@
   margin-left: 10px;
 }
 .filterBox {
-  width: 100%;
+  /* width: 100%; */
   padding: 2%;
 }
 .filterBox > div > a {
@@ -32,14 +37,14 @@
   margin-left: 50px !important;
   color: gray;
 }
-.tagsContainer {
+.pagesContainer {
   margin: 15px;
 }
-.tagsContainer i {
+.pagesContainer i {
   margin-left: 5px;
   cursor: pointer;
 }
-.tagsContainer > div {
+.pagesContainer > div {
   padding: 8px 10px;
   margin: 10px 10px;
   background-color: rgb(42, 148, 85);

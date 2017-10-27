@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import { Link } from "react-router-dom";
-import ReactDOM from "react-dom";
 import "./index.css";
 import FilterPages from "./../FilterPages";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
 
-@inject("store")
+@inject("listingStore")
 @observer
 class FilterBar extends Component {
   componentDidMount(nextProps) {
-    this.props.type === "video" ? this.props.store.changeFilters({ type: "v" }) : this.props.store.changeFilters({ type: "p" });
+    this.props.type === "video" ? this.props.listingStore.changeFilters({ type: "v" }) : this.props.listingStore.changeFilters({ type: "p" });
   }
   toggleFilters = () => {
-    this.props.store.showPagesFilters = !this.props.store.showPagesFilters;
-    if (this.props.store.showPagesFilters === false) {
-      this.props.store.filters.selectedPages = queryString.parse(window.location.search).pages.split(",");
+    this.props.listingStore.showPagesFilters = !this.props.listingStore.showPagesFilters;
+    if (this.props.listingStore.showPagesFilters === false) {
+      this.props.listingStore.filters.selectedPages = queryString.parse(window.location.search).pages.split(",");
     }
   };
 
@@ -24,11 +23,11 @@ class FilterBar extends Component {
     let pagesFromQueryString = queryString.parse(window.location.search).pages.split(",");
     pagesFromQueryString.splice(pagesFromQueryString.findIndex(p => p === pageId), 1);
     let newSearch = "pages=" + pagesFromQueryString.toString();
-    this.props.store.history.push(window.location.pathname + "?" + newSearch);
+    this.props.listingStore.history.push(window.location.pathname + "?" + newSearch);
   };
   render() {
-    if (this.props.store.pages && window.location.search !== "") {
-      this.tags = this.props.store.pages
+    if (this.props.listingStore.pages && window.location.search !== "") {
+      this.pages = this.props.listingStore.pages
         .filter(page =>
           queryString
             .parse(window.location.search)
@@ -48,33 +47,40 @@ class FilterBar extends Component {
     }
 
     return (
-      <Flex column>
-        <Flex className="filterBox" justify="center">
-          <div className={this.props.store.filters.period === "today" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/today" + window.location.search}>Today</Link>
-          </div>
-          <div className={this.props.store.filters.period === "yesterday" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/yesterday" + window.location.search}>Yesterday</Link>
-          </div>
-          <div className={this.props.store.filters.period === "sevenD" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/sevenD" + window.location.search}>Last 7 days</Link>
-          </div>
-          <div className={this.props.store.filters.period === "thirtyD" ? "highlighted" : ""}>
-            <Link to={"/listing/" + this.props.store.filters.type + "/thirtyD" + window.location.search}>Last 30 days</Link>
-          </div>
-          <div className={this.props.store.filters.type === "v" ? "highlighted first_period" : "first_period"}>
-            <Link to={"/listing/v/" + this.props.period + window.location.search}>Videos</Link>
-          </div>
-          <div className={this.props.store.filters.type === "p" ? "highlighted" : ""}>
-            <Link to={"/listing/p/" + this.props.period + window.location.search}>Posts</Link>
-          </div>
-          <div className={this.props.store.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
-            <div onClick={this.toggleFilters}>More filters</div>
-          </div>
+      <Flex column className="filterBar">
+        <Flex justify="space-between">
+          <Flex column justify="center">
+            <Link to={"/settings"}>
+              <i className="fa fa-cog big orange" aria-hidden="true" />
+            </Link>
+          </Flex>
+          <Flex justify="center" className="filterBox" j>
+            <div className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/today" + window.location.search}>Today</Link>
+            </div>
+            <div className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/yesterday" + window.location.search}>Yesterday</Link>
+            </div>
+            <div className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD" + window.location.search}>Last 7 days</Link>
+            </div>
+            <div className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""}>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD" + window.location.search}>Last 30 days</Link>
+            </div>
+            <div className={this.props.listingStore.filters.type === "v" ? "highlighted first_period" : "first_period"}>
+              <Link to={"/listing/v/" + this.props.period + window.location.search}>Videos</Link>
+            </div>
+            <div className={this.props.listingStore.filters.type === "p" ? "highlighted" : ""}>
+              <Link to={"/listing/p/" + this.props.period + window.location.search}>Posts</Link>
+            </div>
+            <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
+              <div onClick={this.toggleFilters}>More filters</div>
+            </div>
+          </Flex>
         </Flex>
         <Flex column>
-          <Flex className="tagsContainer" justify="center" wrap>
-            {this.tags}
+          <Flex className="pagesContainer" justify="center" wrap>
+            {this.pages}
           </Flex>
           <FilterPages />
         </Flex>

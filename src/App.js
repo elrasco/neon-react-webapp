@@ -3,13 +3,20 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Listing from "./components/Listing";
 import Detail from "./components/Detail";
+import Settings from "./components/Settings";
 import { Provider } from "mobx-react";
-import store from "./store";
+import listingStore from "./stores/ListingStore";
+import settingsStore from "./stores/SettingsStore";
+
+const stores = {
+  listingStore,
+  settingsStore
+};
 
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      <Provider {...stores}>
         <Router>
           <div>
             <Switch>
@@ -17,6 +24,7 @@ class App extends Component {
             </Switch>
             <Route exact={true} path={"/listing/:type/:period"} search="?pages=:data" component={Listing} />
             <Route exact={true} path={"/detail/:type/:objectId"} component={Detail} />
+            <Route exact={true} path={"/settings"} component={Settings} />
           </div>
         </Router>
       </Provider>

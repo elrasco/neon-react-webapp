@@ -20,7 +20,7 @@ const shrinkPages = pages => {
   });
 };
 
-class Store {
+class ListingStore {
   // variables
   @observable pages;
   @observable filters = { type: "", period: "", selectedPages: [] };
@@ -66,4 +66,4 @@ class Store {
     }
   };
 }
-export default new Store();
+export default new ListingStore();
