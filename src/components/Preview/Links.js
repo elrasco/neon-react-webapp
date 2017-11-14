@@ -47,7 +47,9 @@ class Links extends Component {
           <div className="description">{this.props.content.title || this.props.content.message}</div>
         </Flex>
         <a href={"/detail/" + this.props.data.type + "/" + this.props.content.objectId} target="_blank">
-          <i className="fa fa-bar-chart" aria-hidden="true" />
+          <Flex className="bar-chart" align="center">
+            <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/ico_statistiche.svg" alt="" />
+          </Flex>
         </a>
       </Box>
     );

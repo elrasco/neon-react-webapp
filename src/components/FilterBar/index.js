@@ -52,31 +52,50 @@ class FilterBar extends Component {
           <Flex column className="filterBox">
             <Flex align="center" className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/today" + window.location.search}>Today</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/today/" + this.props.listingStore.filters.sort + window.location.search}>Today</Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/yesterday" + window.location.search}>Yesterday</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/yesterday/" + this.props.listingStore.filters.sort + window.location.search}>Yesterday</Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD" + window.location.search}>Last 7 days</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD/" + this.props.listingStore.filters.sort + window.location.search}>Last 7 days</Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD" + window.location.search}>Last 30 days</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD/" + this.props.listingStore.filters.sort + window.location.search}>Last 30 days</Link>
             </Flex>
-            <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
+            <Flex align="center" className="orderBy">
+              Order by:
+            </Flex>
+            {/* <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
               <div onClick={this.toggleFilters}>More filters</div>
-            </div>
+            </div> */}
+            <Flex align="center" className={this.props.listingStore.filters.sort === "shares_diff_normalized" ? "highlighted" : ""}>
+              <div className="square" />
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/shares_diff_normalized" + window.location.search}>Shares</Link>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "likes_diff_normalized" ? "highlighted" : ""}>
+              <div className="square" />
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/likes_diff_normalized" + window.location.search}>Likes</Link>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "comments_diff_normalized" ? "highlighted" : ""}>
+              <div className="square" />
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/comments_diff_normalized" + window.location.search}>Comments</Link>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "reactions_diff_normalized" ? "highlighted" : ""}>
+              <div className="square" />
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/reactions_diff_normalized" + window.location.search}>Reactions</Link>
+            </Flex>
           </Flex>
         </Flex>
-        <Flex column>
+        {/* <Flex column>
           <Flex className="pagesContainer" justify="center" wrap>
             {this.pages}
           </Flex>
           <FilterPages />
-        </Flex>
+        </Flex> */}
       </Flex>
     );
   }

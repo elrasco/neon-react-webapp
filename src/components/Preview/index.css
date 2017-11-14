@@ -1,15 +1,16 @@
 .Preview > div {
-  width: 100%;
+  /* width: 100%; */
   position: relative;
 }
 .Preview {
-  border: 1px solid gray;
+  border: 1px solid #dcdcdc;
 }
-i.fa.fa-bar-chart {
+.bar-chart {
   display: block;
   color: white;
-  padding: 7px;
-  font-size: 20px;
+  padding: 10px 10px 10px 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: #00d6b4;
   position: absolute;
@@ -28,7 +29,7 @@ i.fa.fa-bar-chart {
 }
 
 .imgBox > img:hover {
-  transform: scale(1.15);
+  filter: brightness(100%);
 }
 .imgBox {
   display: inline-block;
@@ -38,6 +39,7 @@ i.fa.fa-bar-chart {
   position: relative;
 }
 .imgBox img {
+  filter: brightness(70%);
   display: block;
   transition: 0.4s ease-in-out;
 }
@@ -48,17 +50,26 @@ div.description {
   padding: 10px;
 }
 .reactions {
-  padding: 0 10px 20px 10px;
+  padding: 10px;
   color: gray;
+  font-size: 13px;
+}
+.metric > i {
+  margin: 5px 3px 5px 0px;
 }
 .reactions > i {
   width: 20px !important;
   height: 20px !important;
 }
-.origin_link {
-  width: 50%;
-  padding: 7px;
+.divider {
+  width: 100%;
+  border-bottom: 1px solid #dcdcdc;
   margin: 10px 0;
+}
+.origin_link {
+  width: 40%;
+  margin: auto;
+  padding: 7px;
   text-align: center;
   text-decoration: none;
   background-color: #00d6b4;

@@ -23,7 +23,7 @@ const shrinkPages = pages => {
 class ListingStore {
   // variables
   @observable pages;
-  @observable filters = { type: "", period: "", selectedPages: [] };
+  @observable filters = { type: "", period: "", sort: "", selectedPages: [] };
   @observable previews = [];
   @observable loader;
   @observable history;
@@ -48,9 +48,10 @@ class ListingStore {
   fetch = () => {
     const period = this.filters.period;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
+    const sort = this.filters.sort;
     this.loader = true;
     if (this.filters.selectedPages.length === 0) {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?limit=40")
+      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?sort=" + sort + "&limit=40")
         .then(response => response.json())
         .then(response => {
           this.previews = response;

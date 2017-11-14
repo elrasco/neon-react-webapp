@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
+import Header from "../Header";
 import FilterBar from "./../FilterBar";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
@@ -17,6 +18,7 @@ class Listing extends Component {
     this.props.listingStore.changeFilters({
       type: this.props.match.params.type,
       period: this.props.match.params.period,
+      sort: this.props.match.params.sort,
       selectedPages: this.queryParamParsed
     });
   }
@@ -27,6 +29,7 @@ class Listing extends Component {
     this.props.listingStore.changeFilters({
       type: nextProps.match.params.type,
       period: nextProps.match.params.period,
+      sort: nextProps.match.params.sort,
       selectedPages: this.queryParamParsed
     });
   }
@@ -35,10 +38,13 @@ class Listing extends Component {
     let type = "";
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
     return (
-      <Flex>
-        <FilterBar period={this.props.match.params.period} type={type} />
-        {this.props.listingStore.loader && <div className="loader">Loading</div>}
-        <PostPreviewList data={this.props.listingStore.previews} type={type} period={this.props.match.params.period} />
+      <Flex column>
+        <Header />
+        <Flex>
+          <FilterBar period={this.props.match.params.period} type={type} />
+          {this.props.listingStore.loader && <div className="loader">Loading</div>}
+          <PostPreviewList data={this.props.listingStore.previews} type={type} period={this.props.match.params.period} />
+        </Flex>
       </Flex>
     );
   }
