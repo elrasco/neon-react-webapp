@@ -14,7 +14,7 @@ const Preview = props => {
       <Links image={picture(content)} data={props} content={content} publisher={obj} />
 
       <Flex column className="reactions" justify="start">
-        <Box>{obj.diff} reactions</Box>
+        <Box>{obj.reactions_diff} reactions</Box>
         {props.object.video && (
           <a className="origin_link" href={"http://www.facebook.com/" + props.object.video.objectId} target="_blank">
             See more
