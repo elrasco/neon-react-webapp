@@ -49,30 +49,23 @@ class FilterBar extends Component {
     return (
       <Flex column className="filterBar">
         <Flex justify="space-between">
-          <Flex column justify="center">
-            <Link to={"/settings"}>
-              <i className="fa fa-cog big orange" aria-hidden="true" />
-            </Link>
-          </Flex>
-          <Flex justify="center" className="filterBox" j>
-            <div className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
+          <Flex column className="filterBox">
+            <Flex align="center" className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
+              <div className="square" />
               <Link to={"/listing/" + this.props.listingStore.filters.type + "/today" + window.location.search}>Today</Link>
-            </div>
-            <div className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
+              <div className="square" />
               <Link to={"/listing/" + this.props.listingStore.filters.type + "/yesterday" + window.location.search}>Yesterday</Link>
-            </div>
-            <div className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
+              <div className="square" />
               <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD" + window.location.search}>Last 7 days</Link>
-            </div>
-            <div className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""}>
+            </Flex>
+            <Flex align="center" className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""}>
+              <div className="square" />
               <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD" + window.location.search}>Last 30 days</Link>
-            </div>
-            <div className={this.props.listingStore.filters.type === "v" ? "highlighted first_period" : "first_period"}>
-              <Link to={"/listing/v/" + this.props.period + window.location.search}>Videos</Link>
-            </div>
-            <div className={this.props.listingStore.filters.type === "p" ? "highlighted" : ""}>
-              <Link to={"/listing/p/" + this.props.period + window.location.search}>Posts</Link>
-            </div>
+            </Flex>
             <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
               <div onClick={this.toggleFilters}>More filters</div>
             </div>

@@ -1,28 +1,33 @@
-.filterBar > div:first-child {
-  padding: 0 3%;
-  background-color: rgba(255, 124, 70, 0.5);
+.filterBar {
+  width: 20%;
+  position: absolute;
 }
 
 .filterBox > div:not(.title) {
-  border: 1px solid gray;
   cursor: pointer;
   padding: 5px;
-  margin-left: 10px;
+  margin-bottom: 10px;
 }
 .filterBox {
-  /* width: 100%; */
   padding: 2%;
 }
 .filterBox > div > a {
   text-decoration: none !important;
-  color: gray;
+  color: black;
   cursor: pointer;
+  font-weight: 300;
 }
-.highlighted {
-  background-color: rgba(255, 124, 70, 1);
+.square {
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+}
+.highlighted > .square {
+  background-color: #00d6b4;
 }
 .highlighted > a {
-  color: white !important;
+  color: black !important;
+  font-weight: 500 !important;
 }
 .highlighted > div {
   color: white !important;
@@ -34,8 +39,8 @@
   margin-left: 50px !important;
 }
 .moreFilters {
-  margin-left: 50px !important;
-  color: gray;
+  margin-top: 50px !important;
+  color: black;
 }
 .pagesContainer {
   margin: 15px;

@@ -2,6 +2,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #f1f0f2;
+  font-family: Quicksand, sans-serif;
 }
 div.loader {
   position: absolute;

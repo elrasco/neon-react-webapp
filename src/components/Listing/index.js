@@ -3,6 +3,7 @@ import PostPreviewList from "../PostPreviewList";
 import FilterBar from "./../FilterBar";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
+import { Flex } from "reflexbox";
 
 @inject("listingStore")
 @observer
@@ -34,11 +35,11 @@ class Listing extends Component {
     let type = "";
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
     return (
-      <div>
+      <Flex>
         <FilterBar period={this.props.match.params.period} type={type} />
         {this.props.listingStore.loader && <div className="loader">Loading</div>}
         <PostPreviewList data={this.props.listingStore.previews} type={type} period={this.props.match.params.period} />
-      </div>
+      </Flex>
     );
   }
 }
