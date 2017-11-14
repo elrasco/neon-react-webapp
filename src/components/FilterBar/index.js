@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Flex } from "reflexbox";
 import { Link } from "react-router-dom";
 import "./index.css";
-import FilterPages from "./../FilterPages";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
 
@@ -72,21 +71,21 @@ class FilterBar extends Component {
             {/* <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
               <div onClick={this.toggleFilters}>More filters</div>
             </div> */}
-            <Flex align="center" className={this.props.listingStore.filters.sort === "shares_diff_normalized" ? "highlighted" : ""}>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "1" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/shares_diff_normalized" + window.location.search}>Shares</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/1" + window.location.search}>Shares</Link>
             </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.sort === "likes_diff_normalized" ? "highlighted" : ""}>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "2" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/likes_diff_normalized" + window.location.search}>Likes</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/2" + window.location.search}>Likes</Link>
             </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.sort === "comments_diff_normalized" ? "highlighted" : ""}>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "3" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/comments_diff_normalized" + window.location.search}>Comments</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/3" + window.location.search}>Comments</Link>
             </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.sort === "reactions_diff_normalized" ? "highlighted" : ""}>
+            <Flex align="center" className={this.props.listingStore.filters.sort === "4" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/reactions_diff_normalized" + window.location.search}>Reactions</Link>
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4" + window.location.search}>Reactions</Link>
             </Flex>
           </Flex>
         </Flex>
