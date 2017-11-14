@@ -6,7 +6,13 @@ import "./index.css";
 const Preview = props => {
   const obj = props.object;
   const formatObj = value => {
-    return Math.round(value / 100) / 10 + "K";
+    if (value < 1000) {
+      return value + "";
+    }
+    if (value < 1000000) {
+      return Math.round(value / 100) / 10 + "K";
+    }
+    return Math.round(value / 100000) / 10 + "M";
   };
   const content = props.object[props.type];
   let getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
