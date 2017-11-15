@@ -19,6 +19,7 @@ class Listing extends Component {
       type: this.props.match.params.type,
       period: this.props.match.params.period,
       sort: this.props.match.params.sort,
+      weight: this.props.match.params.w,
       selectedPages: this.queryParamParsed
     });
   }
@@ -30,6 +31,7 @@ class Listing extends Component {
       type: nextProps.match.params.type,
       period: nextProps.match.params.period,
       sort: nextProps.match.params.sort,
+      weight: nextProps.match.params.w,
       selectedPages: this.queryParamParsed
     });
   }

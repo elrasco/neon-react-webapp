@@ -1,6 +1,10 @@
 .PostPreviewList {
-  width: 70%;
+  width: 73%;
   margin: auto;
-  background-color: white;
+  /* background-color: white; */
   padding: 15px;
+}
+.stackContainer {
+  /* background-color: white; */
+  padding-top: 15px;
 }

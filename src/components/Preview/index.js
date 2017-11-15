@@ -36,7 +36,7 @@ const Preview = props => {
           </Box>
         </Flex>
         <div className="divider" />
-        <Flex justify="center" align="start">
+        <Flex justify="start" align="start" className="see_more_button">
           {props.object.video && (
             <a className="origin_link" href={"http://www.facebook.com/" + props.object.video.objectId} target="_blank">
               See more
