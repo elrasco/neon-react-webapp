@@ -4,9 +4,9 @@
   padding-top: 15px;
 }
 .divider_bar {
-  width: 140px;
-  border-bottom: 1px solid #dcdcdc;
-  margin: 15px 0 10px 0px;
+  width: 130px;
+  border-bottom: 1px solid #aaaaaa;
+  margin: 0px 0 10px 15px !important;
   padding-top: 0 !important;
 }
 .filterBar > div:not(.title) {
@@ -27,7 +27,6 @@
 }
 .highlighted > a {
   color: black !important;
-  /* font-weight: 500 !important; */
 }
 .highlighted > div {
   color: white !important;
@@ -41,8 +40,8 @@
   color: black;
 }
 .sort_title {
-  margin: 25px 0;
-  font-size: 15px;
+  margin: 10px 0;
+  font-size: 18px;
   font-weight: 500;
   padding: 0 5px 0 15px;
 }
@@ -62,7 +61,7 @@
 .square {
   width: 8px;
   height: 8px;
-  margin: 0 5px 0 17px;
+  margin: 0 5px 0 1px;
 }
 .custom_slider {
   margin-left: 15px;

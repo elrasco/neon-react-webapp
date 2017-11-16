@@ -1,12 +1,9 @@
 .Preview > div {
-  /* width: 100%; */
   position: relative;
 }
 .Preview {
-  /* border: 1px solid #dcdcdc; */
-  /* margin-bottom: 20px; */
   background-color: white;
-  /* padding: 5px; */
+  box-shadow: 0px 5px 15px 0px rgba(212, 212, 212, 1);
 }
 .bar-chart {
   display: block;
@@ -23,14 +20,15 @@
 .publisher {
   color: black;
   padding: 2.5% 4%;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 300;
   width: 92%;
 }
 .publisher > img {
   width: 30px;
   height: 30px;
   border: 1px solid #f1f0f2;
+  border-radius: 50%;
 }
 
 .imgBox > img:hover {
@@ -39,7 +37,6 @@
 .imgBox {
   display: inline-block;
   overflow: hidden;
-  /* border: 1px solid gray; */
   width: 100%;
   position: relative;
 }
@@ -53,6 +50,8 @@ img {
 }
 div.description {
   padding: 2.5% 4% 2.5% 4%;
+  font-size: 15px;
+  font-weight: 500;
 }
 .reactions {
   padding: 0% 4% 6% 4%;

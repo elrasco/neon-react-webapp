@@ -134,6 +134,7 @@ class FilterBar extends Component {
                 Reactions
               </Link>
             </Flex>
+            <div className="divider_bar" />
             <Flex className="sort_title fanbase">
               <Flex> Fanbase handicap:</Flex>
             </Flex>
