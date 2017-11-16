@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { Legend, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Flex } from "reflexbox";
 import TooltipFormatter from "./TooltipFormatter";
 import "./Tooltip.css";
@@ -20,7 +20,8 @@ class Graph extends Component {
             <XAxis dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} />
             <YAxis />
             <Tooltip content={<TooltipFormatter />} />
-
+            {/* <Legend verticalAlign="top" height={55} /> */}
+            <Legend verticalAlign="top" align="right" layout="vertical" height={20} wrapperStyle={{ paddingLeft: "35px" }} />
             <Line type="monotone" stroke="green" dataKey="comments_total_count" dot={false} />
             <Line type="monotone" stroke="blue" dataKey="likes_total_count" dot={false} />
             <Line type="monotone" stroke="orangered" dataKey="shares_total_count" dot={false} />

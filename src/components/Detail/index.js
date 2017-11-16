@@ -63,12 +63,11 @@ class Detail extends Component {
 
             console.log(this.state.prediction.series);
             const okKeys = Object.keys(concepts_series).filter(key => concepts_series[key].series.filter(value => value > 0).length > response.prediction.frames.length * 0.4);
-            console.log(okKeys);
+            console.log("________________", concepts);
+
             this.setState(
               {
-                concepts: concepts.filter(c => {
-                  concepts_series_array.map();
-                })
+                concepts
               },
               () => {
                 this.setState({ prediction: { show: true, series: concepts_series_array } });
@@ -93,7 +92,7 @@ class Detail extends Component {
           });
         }
         this.setState({ series: series });
-        console.log(this.state.series);
+        console.log(this.state);
       })
       .then(() => this.setState({ loading: false }));
   }
@@ -110,16 +109,22 @@ class Detail extends Component {
           <Box w={0.8}>{<Graph title={"Interactions"} data={this.state.series} dataKeys={["comments_total_count", "likes_total_count", "shares_total_count", "reactions_total_count"]} />}</Box>
         </Flex>
         {this.state.prediction.show && (
-          <Flex wrap w={1} p={2}>
+          <Flex wrap w={0.8} p={2} className="concepts_graph">
             <Box w={0.8}>
               <Flex column>
-                <h3>{this.props.title}</h3>
+                <h3>Concepts</h3>
                 <ResponsiveContainer width="98%" height={400}>
                   <LineChart data={this.state.prediction.series}>
                     <XAxis />
                     <YAxis domain={["auto", "auto"]} />
                     <Tooltip />
-                    <Legend verticalAlign="top" align="right" layout="vertical" height={36} />
+                    <Legend
+                      verticalAlign="top"
+                      align="right"
+                      layout="vertical"
+                      height={20}
+                      wrapperStyle={{ flexWrap: "wrap", paddingLeft: "35px", maxHeight: "360px", height: "360px", overflow: "auto" }}
+                    />
                     {this.state.concepts.map(k => {
                       return <Line type="linear" connectNulls={true} stroke={this.stringToColour(k)} dataKey={k} dot={false} />;
                     })}

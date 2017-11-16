@@ -7,7 +7,7 @@ div.Header {
 .logo {
   background-color: #262d31;
   padding-right: 20px;
-  /* width: 140px; */
+  height: 100%;
 }
 img.logoImg {
   width: 100%;
