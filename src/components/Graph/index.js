@@ -20,6 +20,7 @@ class Graph extends Component {
             <XAxis dataKey="fromTheFirst" type="number" minTickGap={1} tickFormatter={this.tickFormatter} />
             <YAxis />
             <Tooltip content={<TooltipFormatter />} />
+
             <Line type="monotone" stroke="green" dataKey="comments_total_count" dot={false} />
             <Line type="monotone" stroke="blue" dataKey="likes_total_count" dot={false} />
             <Line type="monotone" stroke="orangered" dataKey="shares_total_count" dot={false} />
