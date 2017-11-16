@@ -44,13 +44,11 @@ class ListingStore {
     if (fetch) this.fetch();
   };
 
-  @action
   fetch = () => {
     const period = this.filters.period;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
     let sort = ["shares_diff_normalized", "likes_diff_normalized", "comments_diff_normalized", "reactions_diff_normalized"];
     const weight = this.filters.weight * 2;
-
     this.loader = true;
     if (this.filters.selectedPages.length === 0) {
       fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=40")

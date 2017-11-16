@@ -24,16 +24,20 @@ class Listing extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
+    const isSomethingChanged = !Object.keys(this.props.listingStore.filters).every(k1 =>
+      Object.keys(nextProps.match.params).some(k2 => this.props.listingStore.filters[k1] === nextProps.match.params[k2])
+    );
     nextProps.location.search === "" || nextProps.location.search === "?pages="
       ? (this.queryParamParsed = [])
       : (this.queryParamParsed = queryString.parse(nextProps.location.search).pages.split(","));
-    this.props.listingStore.changeFilters({
-      type: nextProps.match.params.type,
-      period: nextProps.match.params.period,
-      sort: nextProps.match.params.sort,
-      weight: nextProps.match.params.w,
-      selectedPages: this.queryParamParsed
-    });
+    if (isSomethingChanged)
+      this.props.listingStore.changeFilters({
+        type: nextProps.match.params.type,
+        period: nextProps.match.params.period,
+        sort: nextProps.match.params.sort,
+        weight: nextProps.match.params.w,
+        selectedPages: this.queryParamParsed
+      });
   }
 
   render() {

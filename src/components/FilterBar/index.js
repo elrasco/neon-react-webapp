@@ -23,13 +23,17 @@ class FilterBar extends Component {
   };
   handle = props => {
     const { value, dragging, index, ...restProps } = props;
-    this.props.listingStore.filters.weight = value;
-    this.props.listingStore.fetch();
-
     return (
       <Tooltip prefixCls="rc-slider-tooltip" overlay={value} visible={dragging} placement="top" key={index}>
         <Handle value={value} {...restProps} />
       </Tooltip>
+    );
+  };
+
+  onSlideChange = value => {
+    this.props.listingStore.changeFilters({ weight: value }, false);
+    this.props.listingStore.history.push(
+      "/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4/" + this.props.listingStore.filters.weight + window.location.search
     );
   };
   removeFilter = pageId => {
@@ -134,7 +138,7 @@ class FilterBar extends Component {
               <Flex> Fanbase handicap:</Flex>
             </Flex>
             <Flex align="center">
-              <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} className="custom_slider" />
+              <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
             </Flex>
           </Flex>
         </Flex>
