@@ -5,7 +5,6 @@ class TooltipFormatter extends Component {
     const { active } = this.props;
 
     if (active) {
-      console.log(this.props);
       const { payload } = this.props;
       let when, comments, reactions, shares, likes;
       try {

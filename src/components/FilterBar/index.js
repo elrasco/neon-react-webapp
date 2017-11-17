@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
+import Slider, { Range } from "rc-slider";
+import "rc-slider/assets/index.css";
+import Tooltip from "rc-tooltip";
+const Handle = Slider.Handle;
 
 @inject("listingStore")
 @observer
@@ -17,7 +21,21 @@ class FilterBar extends Component {
       this.props.listingStore.filters.selectedPages = queryString.parse(window.location.search).pages.split(",");
     }
   };
+  handle = props => {
+    const { value, dragging, index, ...restProps } = props;
+    return (
+      <Tooltip prefixCls="rc-slider-tooltip" overlay={value} visible={dragging} placement="top" key={index}>
+        <Handle value={value} {...restProps} />
+      </Tooltip>
+    );
+  };
 
+  onSlideChange = value => {
+    this.props.listingStore.changeFilters({ weight: value }, false);
+    this.props.listingStore.history.push(
+      "/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4/" + this.props.listingStore.filters.weight + window.location.search
+    );
+  };
   removeFilter = pageId => {
     let pagesFromQueryString = queryString.parse(window.location.search).pages.split(",");
     pagesFromQueryString.splice(pagesFromQueryString.findIndex(p => p === pageId), 1);
@@ -47,54 +65,84 @@ class FilterBar extends Component {
 
     return (
       <Flex column className="filterBar">
-        <Flex justify="space-between">
-          <Flex column className="filterBox">
-            <Flex align="center" className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
-              <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/today/" + this.props.listingStore.filters.sort + window.location.search}>Today</Link>
-            </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
-              <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/yesterday/" + this.props.listingStore.filters.sort + window.location.search}>Yesterday</Link>
-            </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
-              <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD/" + this.props.listingStore.filters.sort + window.location.search}>Last 7 days</Link>
-            </Flex>
-            <Flex align="center" className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""}>
-              <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD/" + this.props.listingStore.filters.sort + window.location.search}>Last 30 days</Link>
-            </Flex>
-            <Flex align="center" className="orderBy">
-              Order by:
-            </Flex>
-            {/* <div className={this.props.listingStore.showPagesFilters ? "highlighted moreFilters" : "moreFilters"}>
-              <div onClick={this.toggleFilters}>More filters</div>
-            </div> */}
+        <Flex column className="period">
+          <Flex className="sort_title">
+            <Flex> Period range:</Flex>
+          </Flex>
+          <Flex align="center" className={this.props.listingStore.filters.period === "today" ? "highlighted" : ""}>
+            <div className="square" />
+            <Link to={"/listing/" + this.props.listingStore.filters.type + "/today/" + this.props.listingStore.filters.sort + "/" + this.props.listingStore.filters.weight + window.location.search}>
+              Today
+            </Link>
+          </Flex>
+          <Flex align="center" className={this.props.listingStore.filters.period === "yesterday" ? "highlighted" : ""}>
+            <div className="square" />
+            <Link
+              to={"/listing/" + this.props.listingStore.filters.type + "/yesterday/" + this.props.listingStore.filters.sort + "/" + this.props.listingStore.filters.weight + window.location.search}
+            >
+              Yesterday
+            </Link>
+          </Flex>
+          <Flex align="center" className={this.props.listingStore.filters.period === "sevenD" ? "highlighted" : ""}>
+            <div className="square" />
+            <Link to={"/listing/" + this.props.listingStore.filters.type + "/sevenD/" + this.props.listingStore.filters.sort + "/" + this.props.listingStore.filters.weight + window.location.search}>
+              Last 7 days
+            </Link>
+          </Flex>
+          <Flex className={this.props.listingStore.filters.period === "thirtyD" ? "highlighted" : ""} align="center">
+            <div className="square" />
+            <Link to={"/listing/" + this.props.listingStore.filters.type + "/thirtyD/" + this.props.listingStore.filters.sort + "/" + this.props.listingStore.filters.weight + window.location.search}>
+              Last 30 days
+            </Link>
+          </Flex>
+          <div className="divider_bar" />
+        </Flex>
+        <Flex className="sort" column align="start">
+          <Flex className="sort_title">
+            <Flex> Order by:</Flex>
+          </Flex>
+          <Flex column className="sort_content">
             <Flex align="center" className={this.props.listingStore.filters.sort === "1" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/1" + window.location.search}>Shares</Link>
+              <Link
+                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/1" + "/" + this.props.listingStore.filters.weight + window.location.search}
+              >
+                Shares
+              </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "2" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/2" + window.location.search}>Likes</Link>
+              <Link
+                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/2" + "/" + this.props.listingStore.filters.weight + window.location.search}
+              >
+                Likes
+              </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "3" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/3" + window.location.search}>Comments</Link>
+              <Link
+                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/3" + "/" + this.props.listingStore.filters.weight + window.location.search}
+              >
+                Comments
+              </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "4" ? "highlighted" : ""}>
               <div className="square" />
-              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4" + window.location.search}>Reactions</Link>
+              <Link
+                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4" + "/" + this.props.listingStore.filters.weight + window.location.search}
+              >
+                Reactions
+              </Link>
+            </Flex>
+            <div className="divider_bar" />
+            <Flex className="sort_title fanbase">
+              <Flex> Fanbase handicap:</Flex>
+            </Flex>
+            <Flex align="center">
+              <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
             </Flex>
           </Flex>
         </Flex>
-        {/* <Flex column>
-          <Flex className="pagesContainer" justify="center" wrap>
-            {this.pages}
-          </Flex>
-          <FilterPages />
-        </Flex> */}
       </Flex>
     );
   }

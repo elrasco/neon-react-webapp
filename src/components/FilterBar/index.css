@@ -1,63 +1,72 @@
 .filterBar {
   width: 20%;
   position: absolute;
+  padding-top: 15px;
 }
-
-.filterBox > div:not(.title) {
+.divider_bar {
+  width: 130px;
+  border-bottom: 1px solid #aaaaaa;
+  margin: 0px 0 10px 15px !important;
+  padding-top: 0 !important;
+}
+.filterBar > div:not(.title) {
   cursor: pointer;
   padding: 5px;
   margin-bottom: 10px;
 }
-.filterBox {
-  padding: 2%;
-}
-.filterBox > div > a {
+.period > div > a,
+.sort_content > div > a {
   text-decoration: none !important;
   color: black;
   cursor: pointer;
   font-weight: 300;
 }
-.square {
-  width: 8px;
-  height: 8px;
-  margin-right: 5px;
-}
+
 .highlighted > .square {
   background-color: #00d6b4;
 }
 .highlighted > a {
   color: black !important;
-  font-weight: 500 !important;
 }
 .highlighted > div {
   color: white !important;
 }
-.filterBox > div.title {
+.filterBar > div.title {
   padding: 5px 10px;
 }
-.first_period {
-  margin-left: 50px !important;
-}
+
 .moreFilters {
   margin-top: 50px !important;
   color: black;
 }
-.pagesContainer {
-  margin: 15px;
+.sort_title {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0 5px 0 15px;
 }
-.pagesContainer i {
-  margin-left: 5px;
-  cursor: pointer;
+.sort_title.fanbase {
+  margin-top: 45px;
+  padding: 0 5px 0 15px;
 }
-.pagesContainer > div {
-  padding: 8px 10px;
-  margin: 10px 10px;
-  background-color: rgb(42, 148, 85);
-  color: white;
-  border: 1px solid rgb(42, 148, 85);
-  border-radius: 15px;
-  font-size: 15px;
+.sort_title > img {
+  width: 20px;
+  height: 20px;
 }
-.orderBy {
-  margin-top: 20px;
+.sort_content > div,
+.period > div {
+  margin: 10px 0;
+}
+
+.square {
+  width: 8px;
+  height: 8px;
+  margin: 0 5px 0 1px;
+}
+.custom_slider {
+  margin-left: 15px;
+  width: 80% !important;
+}
+.custom_slider > .rc-slider-track {
+  background-color: #00d6b4;
 }

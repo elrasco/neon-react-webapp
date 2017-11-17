@@ -6,12 +6,10 @@ div.Header {
 }
 .logo {
   background-color: #262d31;
-  width: 140px;
+  padding-right: 20px;
+  height: 100%;
 }
 img.logoImg {
   width: 100%;
-  padding: 8px;
-}
-.bar {
-  /* width: calc(85% + 15px); */
+  margin: 8px 15px;
 }
