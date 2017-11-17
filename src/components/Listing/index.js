@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
 import Header from "../Header";
 import FilterBar from "./../FilterBar";
+import FilterCategories from "./../FilterCategories";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
 import { Flex } from "reflexbox";
@@ -50,6 +51,7 @@ class Listing extends Component {
           <FilterBar period={this.props.match.params.period} type={type} />
           {this.props.listingStore.loader && <div className="loader">Loading</div>}
           <PostPreviewList data={this.props.listingStore.previews} type={type} period={this.props.match.params.period} />
+          <FilterCategories />
         </Flex>
       </Flex>
     );

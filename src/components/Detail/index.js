@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Flex, Box } from "reflexbox";
 import Graph from "../Graph";
 import Post from "./Post";
-import R from "ramda";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import Header from "../Header";
 import "./index.css";
@@ -63,7 +62,7 @@ class Detail extends Component {
 
             console.log(this.state.prediction.series);
             const okKeys = Object.keys(concepts_series).filter(key => concepts_series[key].series.filter(value => value > 0).length > response.prediction.frames.length * 0.4);
-            console.log("________________", concepts);
+            console.log(okKeys);
 
             this.setState(
               {

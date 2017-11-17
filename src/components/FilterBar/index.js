@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
-import Slider, { Range } from "rc-slider";
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Tooltip from "rc-tooltip";
 const Handle = Slider.Handle;
@@ -104,33 +104,25 @@ class FilterBar extends Component {
           <Flex column className="sort_content">
             <Flex align="center" className={this.props.listingStore.filters.sort === "1" ? "highlighted" : ""}>
               <div className="square" />
-              <Link
-                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/1" + "/" + this.props.listingStore.filters.weight + window.location.search}
-              >
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/1/" + this.props.listingStore.filters.weight + window.location.search}>
                 Shares
               </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "2" ? "highlighted" : ""}>
               <div className="square" />
-              <Link
-                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/2" + "/" + this.props.listingStore.filters.weight + window.location.search}
-              >
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/2/" + this.props.listingStore.filters.weight + window.location.search}>
                 Likes
               </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "3" ? "highlighted" : ""}>
               <div className="square" />
-              <Link
-                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/3" + "/" + this.props.listingStore.filters.weight + window.location.search}
-              >
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/3/" + this.props.listingStore.filters.weight + window.location.search}>
                 Comments
               </Link>
             </Flex>
             <Flex align="center" className={this.props.listingStore.filters.sort === "4" ? "highlighted" : ""}>
               <div className="square" />
-              <Link
-                to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4" + "/" + this.props.listingStore.filters.weight + window.location.search}
-              >
+              <Link to={"/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4/" + this.props.listingStore.filters.weight + window.location.search}>
                 Reactions
               </Link>
             </Flex>
