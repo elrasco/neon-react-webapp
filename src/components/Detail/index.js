@@ -60,9 +60,9 @@ class Detail extends Component {
               });
             });
 
-            console.log(this.state.prediction.series);
+            // console.log(this.state.prediction.series);
             const okKeys = Object.keys(concepts_series).filter(key => concepts_series[key].series.filter(value => value > 0).length > response.prediction.frames.length * 0.4);
-            console.log(okKeys);
+            // console.log(okKeys);
 
             this.setState(
               {
@@ -91,7 +91,7 @@ class Detail extends Component {
           });
         }
         this.setState({ series: series });
-        console.log(this.state);
+        // console.log(this.state);
       })
       .then(() => this.setState({ loading: false }));
   }
