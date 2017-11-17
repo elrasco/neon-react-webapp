@@ -1,5 +1,5 @@
 .FilterCategories {
-  width: 12%;
+  width: 12% !important;
   position: absolute;
   padding-top: 15px;
   right: 0;
