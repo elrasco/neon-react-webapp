@@ -21,7 +21,17 @@ class Detail extends Component {
       var value = (hash >> (i * 8)) & 0xff;
       colour += ("00" + value.toString(16)).substr(-2);
     }
-    return colour;
+
+    var components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(colour);
+    var rgbColour = components
+      ? {
+          r: parseInt(components[1], 16),
+          g: parseInt(components[2], 16),
+          b: parseInt(components[3], 16)
+        }
+      : null;
+
+    return `rgba(${rgbColour.r}, ${rgbColour.g}, ${rgbColour.b},0.4)`;
   }
 
   componentDidMount() {
@@ -65,7 +75,7 @@ class Detail extends Component {
             this.setState(
               {
                 concepts: concepts.filter(c => {
-                  concepts_series_array.map();
+                  return c;
                 })
               },
               () => {
