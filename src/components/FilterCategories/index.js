@@ -10,7 +10,24 @@ class FilterCategories extends Component {
   check = e => {
     this.props.listingStore.checkCategory(e.target.id);
   };
+  checkCountry = country => {
+    this.props.listingStore.checkCountry(country.target.id);
+  };
   render() {
+    const countries = this.props.listingStore.countries.map(country => {
+      console.log(this.props.listingStore.countries);
+      return (
+        <Flex key={country.id} className={"category_" + country.id + " category"}>
+          {country.checked && (
+            <img id={country.id} className="checkbox" src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/check_on.svg" alt="" onClick={this.checkCountry} />
+          )}
+          {!country.checked && (
+            <img id={country.id} className="checkbox" src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/check_off.svg" alt="" onClick={this.checkCountry} />
+          )}
+          <Flex className="category_descr"> {country.descr} </Flex>
+        </Flex>
+      );
+    });
     const categories = this.props.listingStore.categories.map(cat => {
       return (
         <Flex key={cat.id} className={"category_" + cat.id + " category"}>
@@ -24,6 +41,8 @@ class FilterCategories extends Component {
       <Flex column w={1} className="FilterCategories" justify="start" align="start">
         <Flex className="category_title"> Categories:</Flex>
         {categories}
+        <Flex className="category_title"> Countries:</Flex>
+        {countries}
       </Flex>
     );
   }

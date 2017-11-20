@@ -2,27 +2,14 @@ import React, { Component } from "react";
 import { Flex, Box } from "reflexbox";
 import Graph from "../Graph";
 import Post from "./Post";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import Header from "../Header";
 import "./index.css";
+import ConceptsGraph from "./ConceptsGraph";
 
 class Detail extends Component {
   constructor() {
     super();
-    this.state = { post: {}, series: [], loading: true, prediction: { show: false, loading: false, series: [], status: false }, concepts: [] };
-  }
-
-  stringToColour(str) {
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    var colour = "#";
-    for (var i = 0; i < 3; i++) {
-      var value = (hash >> (i * 8)) & 0xff;
-      colour += ("00" + value.toString(16)).substr(-2);
-    }
-    return colour;
+    this.state = { post: {}, series: [], loading: true, prediction: { show: false, loading: false, series: [], status: false, concepts: [] } };
   }
 
   componentDidMount() {
@@ -44,15 +31,19 @@ class Detail extends Component {
       fetch(`${apiHost}/api/predictions/${objectId}`)
         .then(response => response.json())
         .then(response => {
-          let concepts_series = {};
           if (response.status === "ANALYZED") {
             let concepts = [];
             let concepts_series_array = [];
             response.prediction.frames.forEach((f, i) => {
               concepts_series_array.push({});
               f.data.concepts.forEach(c => {
-                if (!concepts.includes(c.id)) {
-                  concepts.push(c.id);
+                let index = concepts.findIndex(_c => _c.id === c.id);
+                if (index === -1) {
+                  concepts.push(Object.assign({}, c, { count: 1, value: c.value, avg: c.value }));
+                } else {
+                  concepts[index].count++;
+                  concepts[index].value = concepts[index].value + c.value;
+                  concepts[index].avg = concepts[index].value / concepts[index].count;
                 }
                 let object = {};
                 object[c.id] = c.value;
@@ -60,18 +51,19 @@ class Detail extends Component {
               });
             });
 
-            // console.log(this.state.prediction.series);
-            const okKeys = Object.keys(concepts_series).filter(key => concepts_series[key].series.filter(value => value > 0).length > response.prediction.frames.length * 0.4);
-            // console.log(okKeys);
+            concepts = concepts
+              .map(c =>
+                Object.assign({}, c, {
+                  name: c.name.toUpperCase()
+                })
+              )
+              .sort((c1, c2) => c2.count - c1.count)
+              .slice(0, 15)
+              .sort((c1, c2) => c2.avg - c1.avg);
 
-            this.setState(
-              {
-                concepts
-              },
-              () => {
-                this.setState({ prediction: { show: true, series: concepts_series_array } });
-              }
-            );
+            this.setState({ prediction: { concepts } }, () => {
+              this.setState({ prediction: Object.assign({}, this.state.prediction, { show: true, series: concepts_series_array }) });
+            });
           }
         });
     }
@@ -91,7 +83,6 @@ class Detail extends Component {
           });
         }
         this.setState({ series: series });
-        // console.log(this.state);
       })
       .then(() => this.setState({ loading: false }));
   }
@@ -109,28 +100,7 @@ class Detail extends Component {
         </Flex>
         {this.state.prediction.show && (
           <Flex wrap w={0.8} p={2} className="concepts_graph">
-            <Box w={0.8}>
-              <Flex column>
-                <h3>Concepts</h3>
-                <ResponsiveContainer width="98%" height={400}>
-                  <LineChart data={this.state.prediction.series}>
-                    <XAxis />
-                    <YAxis domain={["auto", "auto"]} />
-                    <Tooltip />
-                    <Legend
-                      verticalAlign="top"
-                      align="right"
-                      layout="vertical"
-                      height={20}
-                      wrapperStyle={{ flexWrap: "wrap", paddingLeft: "35px", maxHeight: "360px", height: "360px", overflow: "auto" }}
-                    />
-                    {this.state.concepts.map(k => {
-                      return <Line type="linear" connectNulls={true} stroke={this.stringToColour(k)} dataKey={k} dot={false} />;
-                    })}
-                  </LineChart>
-                </ResponsiveContainer>
-              </Flex>
-            </Box>
+            <Box w={0.8}>{<ConceptsGraph prediction={this.state.prediction} />}</Box>
           </Flex>
         )}
       </Flex>

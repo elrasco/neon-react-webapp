@@ -29,7 +29,9 @@ class ListingStore {
   @observable history;
   @observable showPagesFilters = false;
   @observable categories = [];
+  @observable countries = [];
   checkedCategories = [];
+  checkedCountries = [];
   constructor() {
     Pages.getAll()
       .then(shrinkPages)
@@ -60,21 +62,30 @@ class ListingStore {
         return -1;
       });
   };
+
   attachMainCountry = videos => {
-    return videos.map(video => {
+    let countries = [];
+    videos.map(video => {
       const page = this.pages.find(page => page.objectId === video.page_id);
 
       let country_max = "";
+      let percentage = "";
       let max = 0;
       Object.keys(page.country).forEach(k => {
         if (page.country[k] > max) {
           max = page.country[k];
           country_max = k;
+          percentage = Math.round(page.country[k] / video.page_fan * 100);
         }
       });
-      video.country = country_max;
+      video.country = { id: country_max, percentage: percentage, descr: country_max };
+      countries.push(country_max);
       return video;
     });
+    this.countries = Array.from(new Set(countries)).map(country => {
+      return { id: country, descr: country, checked: true };
+    });
+    return videos;
   };
 
   // actions
@@ -90,6 +101,13 @@ class ListingStore {
     this.categories[index].checked = !this.categories[index].checked;
     this.checkedCategories = this.categories.filter(category => category.checked === true).map(c => c.id);
     this.previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
+  };
+  @action
+  checkCountry = country => {
+    const index = this.countries.findIndex(c => c.id === country);
+    this.countries[index].checked = !this.countries[index].checked;
+    this.checkedCountries = this.countries.filter(country => country.checked === true).map(c => c.id);
+    this.previews = this.total_previews.filter(preview => this.checkedCountries.includes(preview.country.id)).slice(0, 39);
   };
 
   fetch = () => {
