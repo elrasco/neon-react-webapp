@@ -36,18 +36,18 @@ class Links extends Component {
     this.getPage();
     return (
       <Box>
-        <Flex column justify="space-around" align="start">
-          <Flex column className="imgBox">
-            <img src={this.props.image} alt="" />
-          </Flex>
-          <Flex className="publisher" align="center">
-            <img src={this.pageImage} alt="" />
-            {this.pageName}
-          </Flex>
-          <div className="description">{this.props.content.title || this.props.content.message}</div>
+        <Flex column className="imgBox" justify="space-around" align="start">
+          <img src={this.props.image} alt="post preview" />
         </Flex>
+        <Flex className="publisher" justify="space-between" align="center">
+          {this.pageName}
+          <img src={this.pageImage} alt="" />
+        </Flex>
+        <Flex className="description">{this.props.content.title || this.props.content.message}</Flex>
         <a href={"/detail/" + this.props.data.type + "/" + this.props.content.objectId} target="_blank">
-          <i className="fa fa-bar-chart" aria-hidden="true" />
+          <Flex className="bar-chart" align="center">
+            <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/ico_statistiche.svg" alt="Open graph" />
+          </Flex>
         </a>
       </Box>
     );
