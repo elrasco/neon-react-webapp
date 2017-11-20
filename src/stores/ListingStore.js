@@ -49,7 +49,7 @@ class ListingStore {
       .join(" ");
 
   extractCategories = data => {
-    this.checkedCategories = this.categories.filter(c => c.checked).map(c => c.id);
+    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
 
     this.categories = Array.from(new Set(data.map(data => data.video.content_category)))
       .map(cat => {
@@ -63,6 +63,8 @@ class ListingStore {
         if (c2.descr < c1.descr) return 1;
         return -1;
       });
+
+    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
   };
 
   attachMainCountry = videos => {
@@ -101,7 +103,7 @@ class ListingStore {
   checkCategory = catId => {
     this.toggleCategory(catId);
     this.previews = this.total_previews
-      .filter(this.byCountry)
+      //.filter(this.byCountry)
       .filter(this.byCategories)
       .slice(0, 19);
   };
@@ -110,7 +112,7 @@ class ListingStore {
     console.log("checkCountry", country);
     this.toggleCountry(country);
     this.previews = this.total_previews
-      .filter(this.byCountry)
+      //.filter(this.byCountry)
       .filter(this.byCategories)
       .slice(0, 19);
   };
@@ -130,7 +132,6 @@ class ListingStore {
     return this.categories.filter(c => c.checked === true).map(c => c.id);
   };
   byCountry = p => {
-    console.log("byCountry");
     const selectedCountries = this.getSelectedCountries();
     if (selectedCountries.length > 0) {
       return selectedCountries.includes(p.country.id);
@@ -139,7 +140,6 @@ class ListingStore {
   };
 
   byCategories = p => {
-    console.log("byCategories");
     const selectedCategories = this.getSelectedCategories();
     if (selectedCategories.length > 0) {
       return selectedCategories.includes(p.video.content_category);
@@ -159,8 +159,14 @@ class ListingStore {
         .then(this.attachMainCountry)
         .then(response => {
           this.total_previews = response;
-          if (this.checkedCategories.length !== 0) this.previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
-          else {
+          if (this.checkedCategories.length > 0) {
+            const previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
+            if (previews.length === 0) {
+              this.previews = this.total_previews.slice(0, 39);
+            } else {
+              this.previews = previews;
+            }
+          } else {
             this.previews = this.total_previews.slice(0, 39);
           }
           this.extractCategories(this.total_previews);
