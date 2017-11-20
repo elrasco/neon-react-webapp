@@ -49,12 +49,14 @@ class ListingStore {
       .join(" ");
 
   extractCategories = data => {
+    this.checkedCategories = this.categories.filter(c => c.checked).map(c => c.id);
+
     this.categories = Array.from(new Set(data.map(data => data.video.content_category)))
       .map(cat => {
         return {
           id: cat,
           descr: this.capitalize(cat.split("_").join(" ")),
-          checked: this.checkedCategories.includes(cat) || this.checkedCategories.length === 0 ? true : false
+          checked: this.checkedCategories.includes(cat)
         };
       })
       .sort((c1, c2) => {
@@ -83,7 +85,7 @@ class ListingStore {
       return video;
     });
     this.countries = Array.from(new Set(countries)).map(country => {
-      return { id: country, descr: country, checked: true };
+      return { id: country, descr: country, checked: false };
     });
     return videos;
   };
@@ -97,17 +99,52 @@ class ListingStore {
 
   @action
   checkCategory = catId => {
-    const index = this.categories.findIndex(cat => cat.id === catId);
-    this.categories[index].checked = !this.categories[index].checked;
-    this.checkedCategories = this.categories.filter(category => category.checked === true).map(c => c.id);
-    this.previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
+    this.toggleCategory(catId);
+    this.previews = this.total_previews
+      .filter(this.byCountry)
+      .filter(this.byCategories)
+      .slice(0, 19);
   };
   @action
   checkCountry = country => {
+    console.log("checkCountry", country);
+    this.toggleCountry(country);
+    this.previews = this.total_previews
+      .filter(this.byCountry)
+      .filter(this.byCategories)
+      .slice(0, 19);
+  };
+  toggleCategory = catId => {
+    const index = this.categories.findIndex(cat => cat.id === catId);
+    this.categories[index].checked = !this.categories[index].checked;
+  };
+
+  toggleCountry = country => {
     const index = this.countries.findIndex(c => c.id === country);
     this.countries[index].checked = !this.countries[index].checked;
-    this.checkedCountries = this.countries.filter(country => country.checked === true).map(c => c.id);
-    this.previews = this.total_previews.filter(preview => this.checkedCountries.includes(preview.country.id)).slice(0, 39);
+  };
+  getSelectedCountries = () => {
+    return this.countries.filter(country => country.checked === true).map(c => c.id);
+  };
+  getSelectedCategories = () => {
+    return this.categories.filter(c => c.checked === true).map(c => c.id);
+  };
+  byCountry = p => {
+    console.log("byCountry");
+    const selectedCountries = this.getSelectedCountries();
+    if (selectedCountries.length > 0) {
+      return selectedCountries.includes(p.country.id);
+    }
+    return true;
+  };
+
+  byCategories = p => {
+    console.log("byCategories");
+    const selectedCategories = this.getSelectedCategories();
+    if (selectedCategories.length > 0) {
+      return selectedCategories.includes(p.video.content_category);
+    }
+    return true;
   };
 
   fetch = () => {
