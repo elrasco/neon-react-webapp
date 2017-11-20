@@ -76,6 +76,7 @@ div.description {
 .tile_category {
   border: 1px solid #00d6b4;
   padding: 3px;
+  font-size: 12px;
 }
 .origin_link {
   width: 40%;

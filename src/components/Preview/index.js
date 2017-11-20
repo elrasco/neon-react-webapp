@@ -44,6 +44,7 @@ const Preview = props => {
         <div className="divider" />
         <Flex justify="space-between" align="center" className="see_more_button">
           <Flex className="tile_category">{obj.video.content_category.split("_").join(" ")}</Flex>
+          <Flex className="tile_category">{obj.country.id}</Flex>
           {props.object.video && (
             <a className="origin_link" href={"http://www.facebook.com/" + props.object.video.objectId} target="_blank">
               See more

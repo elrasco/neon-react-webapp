@@ -65,7 +65,7 @@ class Detail extends Component {
       } else {
         this.pollingAnalysysTimeout = setTimeout(() => {
           this.pollingAnalysys();
-        }, response.status === "UNKNOWN" ? 1500 : 10000);
+        }, response.status === "UNKNOWN" ? 1500 : 7000);
       }
     });
   }
