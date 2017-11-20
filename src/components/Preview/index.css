@@ -73,6 +73,10 @@ div.description {
 .see_more_button {
   padding: 2.8% 0% 1% 0%;
 }
+.tile_category {
+  border: 1px solid #00d6b4;
+  padding: 3px;
+}
 .origin_link {
   width: 40%;
   padding: 2.5%;

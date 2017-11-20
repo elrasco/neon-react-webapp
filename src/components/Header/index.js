@@ -6,13 +6,13 @@ import "./index.css";
 class Header extends Component {
   render() {
     return (
-      <Flex className="Header">
+      <Flex className="Header" align="center">
         <Link to={"/"}>
           <Flex className="logo" justify="start">
             <img className="logoImg" src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/shark_logo.svg" alt="" />
           </Flex>
-          <Flex className="bar" />
         </Link>
+        <Flex className="bar">Fishing for trends</Flex>
       </Flex>
     );
   }

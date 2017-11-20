@@ -16,7 +16,7 @@ const sortByName = pages => {
 };
 const shrinkPages = pages => {
   return pages.map(page => {
-    return { name: page.name, objectId: page.objectId, fan_count: page.fan_count, checked: false };
+    return { name: page.name, objectId: page.objectId, fan_count: page.fan_count, checked: false, country: page.fans_country };
   });
 };
 
@@ -28,6 +28,8 @@ class ListingStore {
   @observable loader;
   @observable history;
   @observable showPagesFilters = false;
+  @observable categories = [];
+  checkedCategories = [];
   constructor() {
     Pages.getAll()
       .then(shrinkPages)
@@ -36,12 +38,58 @@ class ListingStore {
         return (this.pages = res);
       });
   }
+  // general methods
+  capitalize = s =>
+    s
+      .toLowerCase()
+      .split(/\s+/)
+      .map(w => w[0].toUpperCase() + w.slice(1))
+      .join(" ");
+
+  extractCategories = data => {
+    this.categories = Array.from(new Set(data.map(data => data.video.content_category)))
+      .map(cat => {
+        return {
+          id: cat,
+          descr: this.capitalize(cat.split("_").join(" ")),
+          checked: this.checkedCategories.includes(cat) || this.checkedCategories.length === 0 ? true : false
+        };
+      })
+      .sort((c1, c2) => {
+        if (c2.descr < c1.descr) return 1;
+        return -1;
+      });
+  };
+  attachMainCountry = videos => {
+    return videos.map(video => {
+      const page = this.pages.find(page => page.objectId === video.page_id);
+
+      let country_max = "";
+      let max = 0;
+      Object.keys(page.country).forEach(k => {
+        if (page.country[k] > max) {
+          max = page.country[k];
+          country_max = k;
+        }
+      });
+      video.country = country_max;
+      return video;
+    });
+  };
 
   // actions
   @action
   changeFilters = (filters, fetch = true) => {
     this.filters = Object.assign({}, this.filters, filters);
     if (fetch) this.fetch();
+  };
+
+  @action
+  checkCategory = catId => {
+    const index = this.categories.findIndex(cat => cat.id === catId);
+    this.categories[index].checked = !this.categories[index].checked;
+    this.checkedCategories = this.categories.filter(category => category.checked === true).map(c => c.id);
+    this.previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
   };
 
   fetch = () => {
@@ -51,10 +99,16 @@ class ListingStore {
     const weight = this.filters.weight * 2;
     this.loader = true;
     if (this.filters.selectedPages.length === 0) {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=40")
+      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=1000")
         .then(response => response.json())
+        .then(this.attachMainCountry)
         .then(response => {
-          this.previews = response;
+          this.total_previews = response;
+          if (this.checkedCategories.length !== 0) this.previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
+          else {
+            this.previews = this.total_previews.slice(0, 39);
+          }
+          this.extractCategories(this.total_previews);
           this.loader = false;
         });
     } else {
