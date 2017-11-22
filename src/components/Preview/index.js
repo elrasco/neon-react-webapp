@@ -43,8 +43,19 @@ const Preview = props => {
         </Flex>
         <div className="divider" />
         <Flex justify="space-between" align="center" className="see_more_button">
-          <Flex className="tile_category">{obj.video.content_category.split("_").join(" ")}</Flex>
-          <Flex className="tile_category">{obj.country.id}</Flex>
+          <Flex column align="start">
+            <Flex className="tile_category">
+              <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/categoria.svg" alt="" />
+              {obj.video.content_category
+                .split("_")
+                .join(" ")
+                .toLowerCase()}
+            </Flex>
+            <Flex className="tile_country">
+              <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/paese.svg" alt="" />
+              {obj.country.id}
+            </Flex>
+          </Flex>
           {props.object.video && (
             <a className="origin_link" href={"http://www.facebook.com/" + props.object.video.objectId} target="_blank">
               See more
