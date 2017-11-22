@@ -66,24 +66,33 @@ class ListingStore {
 
     this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
   };
-
+  getMax = (countries, fanbase) => {
+    let country_max = "";
+    let percentage = "";
+    let max = 0;
+    Object.keys(countries).forEach(k => {
+      if (countries[k] > max) {
+        max = countries[k];
+        country_max = k;
+        percentage = Math.round(countries[k] / fanbase * 100);
+      }
+    });
+    return { country_max, percentage };
+  };
   attachMainCountry = videos => {
     let countries = [];
     videos.map(video => {
       const page = this.pages.find(page => page.objectId === video.page_id);
+      let allCountries = Object.assign({}, page.country);
+      const firstMax = this.getMax(page.country, video.page_fan);
+      delete allCountries[firstMax.country_max];
+      const secondMax = this.getMax(allCountries, video.page_fan);
 
-      let country_max = "";
-      let percentage = "";
-      let max = 0;
-      Object.keys(page.country).forEach(k => {
-        if (page.country[k] > max) {
-          max = page.country[k];
-          country_max = k;
-          percentage = Math.round(page.country[k] / video.page_fan * 100);
-        }
-      });
-      video.country = { id: country_max, percentage: percentage, descr: country_max };
-      countries.push(country_max);
+      video.country = [
+        { id: firstMax.country_max, percentage: firstMax.percentage, descr: firstMax.country_max },
+        { id: secondMax.country_max, percentage: secondMax.percentage, descr: secondMax.country_max }
+      ];
+      countries.push(firstMax.country_max);
       return video;
     });
     this.countries = Array.from(new Set(countries)).map(country => {

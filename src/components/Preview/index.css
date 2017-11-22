@@ -85,6 +85,9 @@ div.description {
 .tile_category > img {
   margin-right: 5px;
 }
+.tile_country > div {
+  min-width: 50px;
+}
 .origin_link {
   width: 40%;
   padding: 2.5%;

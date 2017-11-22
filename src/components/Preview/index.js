@@ -53,7 +53,7 @@ const Preview = props => {
             </Flex>
             <Flex className="tile_country">
               <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/paese.svg" alt="" />
-              {obj.country.id}
+              <Flex>{obj.country[0].id + ", " + obj.country[1].id}</Flex>
             </Flex>
           </Flex>
           {props.object.video && (
