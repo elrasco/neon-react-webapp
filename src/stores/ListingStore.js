@@ -86,13 +86,13 @@ class ListingStore {
         this.firstMax = this.getMax(page.country, video.page_fan);
         delete allCountries[this.firstMax.country_max];
         this.secondMax = this.getMax(allCountries, video.page_fan);
-
-        video.country = [
-          { id: this.firstMax.country_max, percentage: this.firstMax.percentage, descr: this.firstMax.country_max },
-          { id: this.secondMax.country_max, percentage: this.secondMax.percentage, descr: this.secondMax.country_max }
-        ];
-        countries.push(this.firstMax.country_max);
       }
+
+      video.country = [
+        { id: this.firstMax.country_max, percentage: this.firstMax.percentage, descr: this.firstMax.country_max },
+        { id: this.secondMax.country_max, percentage: this.secondMax.percentage, descr: this.secondMax.country_max }
+      ];
+      countries.push(this.firstMax.country_max);
       return video;
     });
     this.countries = [
