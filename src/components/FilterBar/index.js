@@ -33,7 +33,15 @@ class FilterBar extends Component {
   onSlideChange = value => {
     this.props.listingStore.changeFilters({ weight: value }, false);
     this.props.listingStore.history.push(
-      "/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4/" + this.props.listingStore.filters.weight + window.location.search
+      "/listing/" +
+        this.props.listingStore.filters.type +
+        "/" +
+        this.props.listingStore.filters.period +
+        "/" +
+        this.props.listingStore.filters.sort +
+        "/" +
+        this.props.listingStore.filters.weight +
+        window.location.search
     );
   };
   removeFilter = pageId => {
