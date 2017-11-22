@@ -64,7 +64,7 @@ class ListingStore {
         return -1;
       });
   };
-  getMax = (countries, fanbase) => {
+  getMax = (countries = {}, fanbase) => {
     let country_max = "";
     let percentage = "";
     let max = 0;
