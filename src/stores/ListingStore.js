@@ -95,9 +95,14 @@ class ListingStore {
       countries.push(firstMax.country_max);
       return video;
     });
-    this.countries = Array.from(new Set(countries)).map(country => {
-      return { id: country, descr: country, checked: false };
-    });
+    this.countries = [
+      { id: "IT", descr: "Italy", checked: false },
+      { id: "FR", descr: "France", checked: false },
+      { id: "DE", descr: "Germany", checked: false },
+      { id: "ES", descr: "Spain", checked: false },
+      { id: "US", descr: "USA", checked: false },
+      { id: "GB", descr: "UK", checked: false }
+    ];
     return videos;
   };
 
@@ -112,18 +117,18 @@ class ListingStore {
   checkCategory = catId => {
     this.toggleCategory(catId);
     this.previews = this.total_previews
-      //.filter(this.byCountry)
+      .filter(this.byCountry)
       .filter(this.byCategories)
-      .slice(0, 19);
+      .slice(0, 39);
   };
   @action
   checkCountry = country => {
-    console.log("checkCountry", country);
     this.toggleCountry(country);
     this.previews = this.total_previews
-      //.filter(this.byCountry)
+      .filter(this.byCountry)
       .filter(this.byCategories)
-      .slice(0, 19);
+      .slice(0, 39);
+    this.extractCategories(this.total_previews.filter(f => this.byCountry(f)));
   };
   toggleCategory = catId => {
     const index = this.categories.findIndex(cat => cat.id === catId);
@@ -143,7 +148,7 @@ class ListingStore {
   byCountry = p => {
     const selectedCountries = this.getSelectedCountries();
     if (selectedCountries.length > 0) {
-      return selectedCountries.includes(p.country.id);
+      return p.country.some(c => selectedCountries.includes(c.id));
     }
     return true;
   };
