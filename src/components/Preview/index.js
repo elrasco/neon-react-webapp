@@ -44,16 +44,12 @@ const Preview = props => {
         <div className="divider" />
         <Flex justify="space-between" align="center" className="see_more_button">
           <Flex column align="start">
-            <Flex className="tile_category">
+            <Flex className="tile_category" align="start" justify="start">
               <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/categoria.svg" alt="" />
               {obj.video.content_category
                 .split("_")
                 .join(" ")
                 .toLowerCase()}
-            </Flex>
-            <Flex className="tile_country">
-              <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/paese.svg" alt="" />
-              <Flex>{obj.country[0].id + ", " + obj.country[1].id}</Flex>
             </Flex>
           </Flex>
           {props.object.video && (

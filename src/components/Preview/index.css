@@ -84,9 +84,14 @@ div.description {
 .tile_country > img,
 .tile_category > img {
   margin-right: 5px;
+  max-height: 12px;
+  max-width: 12px;
 }
 .tile_country > div {
   min-width: 50px;
+}
+.tile_category {
+  min-width: 100px;
 }
 .origin_link {
   width: 40%;

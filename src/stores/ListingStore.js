@@ -168,8 +168,9 @@ class ListingStore {
         .then(this.attachMainCountry)
         .then(response => {
           this.total_previews = response;
-          if (this.checkedCategories.length > 0) {
-            const previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
+          const selectedCategories = this.getSelectedCategories();
+          if (selectedCategories.length > 0) {
+            const previews = this.total_previews.filter(preview => selectedCategories.includes(preview.video.content_category)).slice(0, 39);
             if (previews.length === 0) {
               this.previews = this.total_previews.slice(0, 39);
             } else {
