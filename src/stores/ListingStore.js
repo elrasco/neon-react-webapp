@@ -64,7 +64,7 @@ class ListingStore {
         return -1;
       });
   };
-  getMax = (countries = {}, fanbase) => {
+  getMax = (countries, fanbase) => {
     let country_max = "";
     let percentage = "";
     let max = 0;
@@ -82,15 +82,17 @@ class ListingStore {
     videos.map(video => {
       const page = this.pages.find(page => page.objectId === video.page_id);
       let allCountries = Object.assign({}, page.country);
-      const firstMax = this.getMax(page.country, video.page_fan);
-      delete allCountries[firstMax.country_max];
-      const secondMax = this.getMax(allCountries, video.page_fan);
+      if (page.country) {
+        this.firstMax = this.getMax(page.country, video.page_fan);
+        delete allCountries[this.firstMax.country_max];
+        this.secondMax = this.getMax(allCountries, video.page_fan);
 
-      video.country = [
-        { id: firstMax.country_max, percentage: firstMax.percentage, descr: firstMax.country_max },
-        { id: secondMax.country_max, percentage: secondMax.percentage, descr: secondMax.country_max }
-      ];
-      countries.push(firstMax.country_max);
+        video.country = [
+          { id: this.firstMax.country_max, percentage: this.firstMax.percentage, descr: this.firstMax.country_max },
+          { id: this.secondMax.country_max, percentage: this.secondMax.percentage, descr: this.secondMax.country_max }
+        ];
+        countries.push(this.firstMax.country_max);
+      }
       return video;
     });
     this.countries = [
