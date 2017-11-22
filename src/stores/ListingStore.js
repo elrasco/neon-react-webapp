@@ -49,7 +49,7 @@ class ListingStore {
       .join(" ");
 
   extractCategories = data => {
-    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
+    this.checkedCategories = this.getSelectedCategories();
 
     this.categories = Array.from(new Set(data.map(data => data.video.content_category)))
       .map(cat => {
@@ -63,8 +63,6 @@ class ListingStore {
         if (c2.descr < c1.descr) return 1;
         return -1;
       });
-
-    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
   };
   getMax = (countries, fanbase) => {
     let country_max = "";
@@ -96,12 +94,12 @@ class ListingStore {
       return video;
     });
     this.countries = [
-      { id: "IT", descr: "Italy", checked: false },
-      { id: "FR", descr: "France", checked: false },
-      { id: "DE", descr: "Germany", checked: false },
-      { id: "ES", descr: "Spain", checked: false },
-      { id: "US", descr: "USA", checked: false },
-      { id: "GB", descr: "UK", checked: false }
+      { id: "IT", descr: "Italy", checked: this.getSelectedCountries().includes("IT") },
+      { id: "FR", descr: "France", checked: this.getSelectedCountries().includes("France") },
+      { id: "DE", descr: "Germany", checked: this.getSelectedCountries().includes("Germany") },
+      { id: "ES", descr: "Spain", checked: this.getSelectedCountries().includes("Spain") },
+      { id: "US", descr: "USA", checked: this.getSelectedCountries().includes("USA") },
+      { id: "GB", descr: "UK", checked: this.getSelectedCountries().includes("UK") }
     ];
     return videos;
   };
@@ -124,6 +122,7 @@ class ListingStore {
   @action
   checkCountry = country => {
     this.toggleCountry(country);
+    this.checkedCountries = this.countries.filter(c => c.checked === true).map(c => c.id);
     this.previews = this.total_previews
       .filter(this.byCountry)
       .filter(this.byCategories)
@@ -146,9 +145,9 @@ class ListingStore {
     return this.categories.filter(c => c.checked === true).map(c => c.id);
   };
   byCountry = p => {
-    const selectedCountries = this.getSelectedCountries();
-    if (selectedCountries.length > 0) {
-      return p.country.some(c => selectedCountries.includes(c.id));
+    this.checkedCountries = this.getSelectedCountries();
+    if (this.checkedCountries.length > 0) {
+      return p.country.some(c => this.checkedCountries.includes(c.id));
     }
     return true;
   };
@@ -173,18 +172,16 @@ class ListingStore {
         .then(this.attachMainCountry)
         .then(response => {
           this.total_previews = response;
-          const selectedCategories = this.getSelectedCategories();
-          if (selectedCategories.length > 0) {
-            const previews = this.total_previews.filter(preview => selectedCategories.includes(preview.video.content_category)).slice(0, 39);
-            if (previews.length === 0) {
-              this.previews = this.total_previews.slice(0, 39);
-            } else {
-              this.previews = previews;
-            }
+          if (this.checkedCategories.length > 0 || this.checkedCountries.length > 0) {
+            this.previews = this.total_previews
+              .filter(this.byCountry)
+              .filter(this.byCategories)
+              .slice(0, 39);
+            this.extractCategories(this.total_previews.filter(this.byCountry).filter(this.byCategories));
           } else {
             this.previews = this.total_previews.slice(0, 39);
+            this.extractCategories(this.total_previews);
           }
-          this.extractCategories(this.total_previews);
           this.loader = false;
         });
     } else {
