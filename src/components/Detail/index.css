@@ -26,5 +26,31 @@
   color: gray;
   cursor: pointer;
 }
-.see_post > div {
+
+.graphs_container .origin_link {
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  line-height: 50px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.graphs_container .origin_link {
+  width: 120px;
+  height: 50px;
+  padding: 10px 35px;
+  line-height: 50px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.graphs_container .origin_link[disabled] {
+  cursor: default;
+  background-color: rgba(0, 214, 180, 0.6);
+}
+
+.graphs_container .origin_link.action span {
+  overflow: hidden;
+  display: block;
 }
