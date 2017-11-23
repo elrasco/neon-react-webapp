@@ -1,0 +1,13 @@
+.SearchPages {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.tag {
+  border: 1px solid #00d6b4;
+  padding: 5px;
+  margin: 5px 10px;
+}
+.tags {
+  display: wrap;
+  flex-wrap: wrap;
+}

@@ -6,7 +6,6 @@ import "./index.css";
 @inject("listingStore")
 @observer
 class FilterCategories extends Component {
-  componentDidMount() {}
   checkCategory = e => {
     this.props.listingStore.checkCategory(e.target.id);
   };
@@ -36,12 +35,17 @@ class FilterCategories extends Component {
         </Flex>
       );
     });
+    console.log(this.props.listingStore.filters.selectedPages.length);
     return (
       <Flex column w={1} className="FilterCategories" justify="start" align="start">
         <Flex className="category_title"> Categories:</Flex>
         {categories}
-        <Flex className="category_title"> Countries:</Flex>
-        {countries}
+        {this.props.listingStore.filters.selectedPages.length === 0 && (
+          <Flex column>
+            <Flex className="category_title"> Countries:</Flex>
+            {countries}
+          </Flex>
+        )}
       </Flex>
     );
   }

@@ -187,10 +187,23 @@ class ListingStore {
           this.loader = false;
         });
     } else {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "/byPages/" + this.filters.selectedPages.join(",") + "?limit=40")
+      fetch(
+        process.env.REACT_APP_API_URL + "/api/" + period + type + "/byPages/" + this.filters.selectedPages.join(",") + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "?limit=40"
+      )
         .then(response => response.json())
+        .then(this.attachMainCountry)
         .then(response => {
-          this.previews = response;
+          this.total_previews = response;
+          if (this.checkedCategories.length > 0 || this.checkedCountries.length > 0) {
+            this.previews = this.total_previews
+              .filter(this.byCountry)
+              .filter(this.byCategories)
+              .slice(0, 39);
+            this.extractCategories(this.total_previews.filter(this.byCountry).filter(this.byCategories));
+          } else {
+            this.previews = this.total_previews.slice(0, 39);
+            this.extractCategories(this.total_previews);
+          }
           this.loader = false;
         });
     }
