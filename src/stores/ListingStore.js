@@ -97,11 +97,11 @@ class ListingStore {
     });
     this.countries = [
       { id: "IT", descr: "Italy", checked: this.getSelectedCountries().includes("IT") },
-      { id: "DE", descr: "Germany", checked: this.getSelectedCountries().includes("Germany") },
-      { id: "ES", descr: "Spain", checked: this.getSelectedCountries().includes("Spain") },
-      { id: "FR", descr: "France", checked: this.getSelectedCountries().includes("France") },
-      { id: "GB", descr: "UK", checked: this.getSelectedCountries().includes("UK") },
-      { id: "US", descr: "USA", checked: this.getSelectedCountries().includes("USA") }
+      { id: "DE", descr: "Germany", checked: this.getSelectedCountries().includes("DE") },
+      { id: "ES", descr: "Spain", checked: this.getSelectedCountries().includes("ES") },
+      { id: "FR", descr: "France", checked: this.getSelectedCountries().includes("FR") },
+      { id: "GB", descr: "UK", checked: this.getSelectedCountries().includes("GB") },
+      { id: "US", descr: "USA", checked: this.getSelectedCountries().includes("US") }
     ];
     return videos;
   };
