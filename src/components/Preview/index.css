@@ -73,10 +73,25 @@ div.description {
 .see_more_button {
   padding: 2.8% 0% 1% 0%;
 }
-.tile_category {
-  border: 1px solid #00d6b4;
+.tile_category,
+.tile_country {
   padding: 3px;
   font-size: 12px;
+}
+.tile_category {
+  text-transform: capitalize;
+}
+.tile_country > img,
+.tile_category > img {
+  margin-right: 5px;
+  max-height: 12px;
+  max-width: 12px;
+}
+.tile_country > div {
+  min-width: 50px;
+}
+.tile_category {
+  min-width: 100px;
 }
 .origin_link {
   width: 40%;

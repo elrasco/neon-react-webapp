@@ -33,7 +33,15 @@ class FilterBar extends Component {
   onSlideChange = value => {
     this.props.listingStore.changeFilters({ weight: value }, false);
     this.props.listingStore.history.push(
-      "/listing/" + this.props.listingStore.filters.type + "/" + this.props.listingStore.filters.period + "/4/" + this.props.listingStore.filters.weight + window.location.search
+      "/listing/" +
+        this.props.listingStore.filters.type +
+        "/" +
+        this.props.listingStore.filters.period +
+        "/" +
+        this.props.listingStore.filters.sort +
+        "/" +
+        this.props.listingStore.filters.weight +
+        window.location.search
     );
   };
   removeFilter = pageId => {
@@ -127,12 +135,16 @@ class FilterBar extends Component {
               </Link>
             </Flex>
             <div className="divider_bar" />
-            <Flex className="sort_title fanbase">
-              <Flex> Fanbase handicap:</Flex>
-            </Flex>
-            <Flex align="center">
-              <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
-            </Flex>
+            {this.props.listingStore.filters.selectedPages.length === 0 && (
+              <Flex column>
+                <Flex className="sort_title fanbase">
+                  <Flex> Fanbase handicap:</Flex>
+                </Flex>
+                <Flex align="center">
+                  <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
+                </Flex>
+              </Flex>
+            )}
           </Flex>
         </Flex>
       </Flex>

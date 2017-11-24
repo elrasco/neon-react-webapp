@@ -40,7 +40,13 @@ class Links extends Component {
           <img src={this.props.image} alt="post preview" />
         </Flex>
         <Flex className="publisher" justify="space-between" align="center">
-          {this.pageName}
+          <Flex column align="start">
+            {this.pageName}
+            <Flex className="tile_country">
+              <img src="https://s3.eu-central-1.amazonaws.com/smallfish-media/assets/images/shark/paese.svg" alt="" />
+              <Flex>{this.props.publisher.country[0].id + ", " + this.props.publisher.country[1].id}</Flex>
+            </Flex>
+          </Flex>
           <img src={this.pageImage} alt="" />
         </Flex>
         <Flex className="description">{this.props.content.title || this.props.content.message}</Flex>

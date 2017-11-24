@@ -20,6 +20,20 @@ const shrinkPages = pages => {
   });
 };
 
+const capitalize = s =>
+  s
+    .toLowerCase()
+    .split(/\s+/)
+    .map(w => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+
+const sortCategoriesByName = array => {
+  return array.sort((c1, c2) => {
+    if (c2.descr < c1.descr) return 1;
+    return -1;
+  });
+};
+
 class ListingStore {
   // variables
   @observable pages;
@@ -39,59 +53,15 @@ class ListingStore {
       .then(res => {
         return (this.pages = res);
       });
+    this.countries = [
+      { id: "IT", descr: "Italy", checked: this.getSelectedCountries().includes("IT") },
+      { id: "DE", descr: "Germany", checked: this.getSelectedCountries().includes("DE") },
+      { id: "ES", descr: "Spain", checked: this.getSelectedCountries().includes("ES") },
+      { id: "FR", descr: "France", checked: this.getSelectedCountries().includes("FR") },
+      { id: "GB", descr: "UK", checked: this.getSelectedCountries().includes("GB") },
+      { id: "US", descr: "USA", checked: this.getSelectedCountries().includes("US") }
+    ];
   }
-  // general methods
-  capitalize = s =>
-    s
-      .toLowerCase()
-      .split(/\s+/)
-      .map(w => w[0].toUpperCase() + w.slice(1))
-      .join(" ");
-
-  extractCategories = data => {
-    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
-
-    this.categories = Array.from(new Set(data.map(data => data.video.content_category)))
-      .map(cat => {
-        return {
-          id: cat,
-          descr: this.capitalize(cat.split("_").join(" ")),
-          checked: this.checkedCategories.includes(cat)
-        };
-      })
-      .sort((c1, c2) => {
-        if (c2.descr < c1.descr) return 1;
-        return -1;
-      });
-
-    this.checkedCategories = this.categories.filter(c => c.checked === true).map(c => c.id);
-  };
-
-  attachMainCountry = videos => {
-    let countries = [];
-    videos.map(video => {
-      const page = this.pages.find(page => page.objectId === video.page_id);
-
-      let country_max = "";
-      let percentage = "";
-      let max = 0;
-      Object.keys(page.country).forEach(k => {
-        if (page.country[k] > max) {
-          max = page.country[k];
-          country_max = k;
-          percentage = Math.round(page.country[k] / video.page_fan * 100);
-        }
-      });
-      video.country = { id: country_max, percentage: percentage, descr: country_max };
-      countries.push(country_max);
-      return video;
-    });
-    this.countries = Array.from(new Set(countries)).map(country => {
-      return { id: country, descr: country, checked: false };
-    });
-    return videos;
-  };
-
   // actions
   @action
   changeFilters = (filters, fetch = true) => {
@@ -101,40 +71,79 @@ class ListingStore {
 
   @action
   checkCategory = catId => {
-    this.toggleCategory(catId);
+    this.toggle(catId, this.categories);
     this.previews = this.total_previews
-      //.filter(this.byCountry)
+      .filter(this.byCountry)
       .filter(this.byCategories)
-      .slice(0, 19);
+      .slice(0, 39);
   };
   @action
   checkCountry = country => {
-    console.log("checkCountry", country);
-    this.toggleCountry(country);
+    this.toggle(country, this.countries);
+    this.checkedCountries = this.countries.filter(c => c.checked === true).map(c => c.id);
     this.previews = this.total_previews
-      //.filter(this.byCountry)
+      .filter(this.byCountry)
       .filter(this.byCategories)
-      .slice(0, 19);
-  };
-  toggleCategory = catId => {
-    const index = this.categories.findIndex(cat => cat.id === catId);
-    this.categories[index].checked = !this.categories[index].checked;
+      .slice(0, 39);
+    this.extractCategories(this.total_previews.filter(f => this.byCountry(f)));
   };
 
-  toggleCountry = country => {
-    const index = this.countries.findIndex(c => c.id === country);
-    this.countries[index].checked = !this.countries[index].checked;
+  // general methods
+  extractCategories = data => {
+    this.checkedCategories = this.getSelectedCategories();
+
+    this.categories = sortCategoriesByName(
+      Array.from(new Set(data.map(data => data.video.content_category))).map(cat => {
+        return {
+          id: cat,
+          descr: capitalize(cat.split("_").join(" ")),
+          checked: this.checkedCategories.includes(cat)
+        };
+      })
+    );
   };
-  getSelectedCountries = () => {
-    return this.countries.filter(country => country.checked === true).map(c => c.id);
+  getMax = (countries, fanbase) => {
+    let country_max = "";
+    let percentage = "";
+    let max = 0;
+    Object.keys(countries).forEach(k => {
+      if (countries[k] > max) {
+        max = countries[k];
+        country_max = k;
+        percentage = Math.round(countries[k] / fanbase * 100);
+      }
+    });
+    return { country_max, percentage };
   };
-  getSelectedCategories = () => {
-    return this.categories.filter(c => c.checked === true).map(c => c.id);
+
+  attachMainCountry = videos => {
+    return videos.map(video => {
+      const page = this.pages.find(page => page.objectId === video.page_id);
+      let allCountries = Object.assign({}, page.country);
+      if (page.country) {
+        this.firstMax = this.getMax(page.country, video.page_fan);
+        delete allCountries[this.firstMax.country_max];
+        this.secondMax = this.getMax(allCountries, video.page_fan);
+      }
+      video.country = [
+        { id: this.firstMax.country_max, percentage: this.firstMax.percentage, descr: this.firstMax.country_max },
+        { id: this.secondMax.country_max, percentage: this.secondMax.percentage, descr: this.secondMax.country_max }
+      ];
+      return video;
+    });
   };
+
+  toggle = (item, array) => {
+    const index = array.findIndex(c => c.id === item);
+    array[index].checked = !array[index].checked;
+  };
+  getSelectedCountries = () => this.countries.filter(country => country.checked === true).map(c => c.id);
+  getSelectedCategories = () => this.categories.filter(c => c.checked === true).map(c => c.id);
+
   byCountry = p => {
-    const selectedCountries = this.getSelectedCountries();
-    if (selectedCountries.length > 0) {
-      return selectedCountries.includes(p.country.id);
+    this.checkedCountries = this.getSelectedCountries();
+    if (this.checkedCountries.length > 0) {
+      return p.country.some(c => this.checkedCountries.includes(c.id));
     }
     return true;
   };
@@ -150,36 +159,29 @@ class ListingStore {
   fetch = () => {
     const period = this.filters.period;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
-    let sort = ["shares_diff_normalized", "likes_diff_normalized", "comments_diff_normalized", "reactions_diff_normalized"];
     const weight = this.filters.weight * 2;
+    const sort = ["shares_diff_normalized", "likes_diff_normalized", "comments_diff_normalized", "reactions_diff_normalized"];
+    let pagesRequired = "";
     this.loader = true;
-    if (this.filters.selectedPages.length === 0) {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=1000")
-        .then(response => response.json())
-        .then(this.attachMainCountry)
-        .then(response => {
-          this.total_previews = response;
-          if (this.checkedCategories.length > 0) {
-            const previews = this.total_previews.filter(preview => this.checkedCategories.includes(preview.video.content_category)).slice(0, 39);
-            if (previews.length === 0) {
-              this.previews = this.total_previews.slice(0, 39);
-            } else {
-              this.previews = previews;
-            }
-          } else {
-            this.previews = this.total_previews.slice(0, 39);
-          }
+
+    if (this.filters.selectedPages.length !== 0) pagesRequired = "/byPages/" + this.filters.selectedPages.join(",");
+    fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=1000")
+      .then(response => response.json())
+      .then(this.attachMainCountry)
+      .then(response => {
+        this.total_previews = response;
+        if (this.checkedCategories.length > 0 || this.checkedCountries.length > 0) {
+          this.previews = this.total_previews
+            .filter(this.byCountry)
+            .filter(this.byCategories)
+            .slice(0, 39);
+          this.extractCategories(this.total_previews.filter(this.byCountry).filter(this.byCategories));
+        } else {
+          this.previews = this.total_previews.slice(0, 39);
           this.extractCategories(this.total_previews);
-          this.loader = false;
-        });
-    } else {
-      fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + "/byPages/" + this.filters.selectedPages.join(",") + "?limit=40")
-        .then(response => response.json())
-        .then(response => {
-          this.previews = response;
-          this.loader = false;
-        });
-    }
+        }
+        this.loader = false;
+      });
   };
 }
 export default new ListingStore();
