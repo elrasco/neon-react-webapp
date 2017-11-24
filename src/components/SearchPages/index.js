@@ -15,6 +15,7 @@ class SearchPages extends Component {
     }
     this.props.listingStore.changeFilters({ selectedPages: this.selected });
     this.props.listingStore.history.push(window.location.pathname + "?" + queryString.stringify({ pages: this.props.listingStore.filters.selectedPages }));
+    document.getElementById("default").selected = "selected";
   };
   removeFilter = pageId => {
     let pagesFromQueryString = queryString.parse(window.location.search).pages.split(",");
@@ -55,7 +56,9 @@ class SearchPages extends Component {
         <Flex align="center">
           <Flex style={{ marginRight: "10px" }}>Filter by page</Flex>
           <select onChange={this.handleChange}>
-            <option value="null">None</option>
+            <option id="default" value="null" selected="selected">
+              Choose a page
+            </option>
             {this.pages}
           </select>
         </Flex>

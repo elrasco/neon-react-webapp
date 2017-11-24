@@ -24,3 +24,7 @@ select {
   padding: 8px;
   border: 1px solid #00d6b4;
 }
+select > option {
+  background-color: white;
+  padding: 8px;
+}
