@@ -23,6 +23,7 @@ select {
   background-color: white;
   padding: 8px;
   border: 1px solid #00d6b4;
+  font-family: Quicksand, sans-serif !important;
 }
 select > option {
   background-color: white;

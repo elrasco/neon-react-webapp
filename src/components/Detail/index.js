@@ -158,15 +158,13 @@ class Detail extends Component {
   render() {
     return (
       <Flex column className="graphs_container">
-        {this.state.loading && <div className="loader">Loading</div>}
+        {this.state.loading && <div className="loader">Loading...</div>}
         <Header />
         <Box>
           <Post data={this.state.post} />
         </Box>
         <Flex wrap w={0.8} p={2} className="metrics_graph">
-          <Box w={0.8}>
-            {<Graph title={"Interactions"} data={this.state.series} dataKeys={["comments_total_count", "likes_total_count", "shares_total_count", "reactions_total_count"]} />}
-          </Box>
+          <Box w={0.8}>{<Graph title={"Interactions"} data={this.state.series} dataKeys={["comments_total_count", "likes_total_count", "shares_total_count", "reactions_total_count"]} />}</Box>
         </Flex>
         {this.state.prediction.show && (
           <Flex wrap w={0.8} p={2} className="concepts_graph">

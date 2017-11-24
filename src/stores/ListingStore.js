@@ -27,23 +27,40 @@ const capitalize = s =>
     .map(w => w[0].toUpperCase() + w.slice(1))
     .join(" ");
 
-const sortCategoriesByName = array => {
+const orderByName = array => {
   return array.sort((c1, c2) => {
     if (c2.descr < c1.descr) return 1;
     return -1;
   });
 };
+const getMax = (countries, fanbase) => {
+  let country_max = "";
+  let percentage = "";
+  let max = 0;
+  Object.keys(countries).forEach(k => {
+    if (countries[k] > max) {
+      max = countries[k];
+      country_max = k;
+      percentage = Math.round(countries[k] / fanbase * 100);
+    }
+  });
+  return { country_max, percentage };
+};
+const toggle = (item, array) => {
+  const index = array.findIndex(c => c.id === item);
+  array[index].checked = !array[index].checked;
+};
 
 class ListingStore {
   // variables
   @observable pages;
+  @observable categories = [];
+  @observable countries = [];
   @observable filters = { type: "", period: "", sort: "", selectedPages: [], weight: 1 };
   @observable previews = [];
   @observable loader;
   @observable history;
   @observable showPagesFilters = false;
-  @observable categories = [];
-  @observable countries = [];
   checkedCategories = [];
   checkedCountries = [];
   constructor() {
@@ -71,7 +88,7 @@ class ListingStore {
 
   @action
   checkCategory = catId => {
-    this.toggle(catId, this.categories);
+    toggle(catId, this.categories);
     this.previews = this.total_previews
       .filter(this.byCountry)
       .filter(this.byCategories)
@@ -79,8 +96,8 @@ class ListingStore {
   };
   @action
   checkCountry = country => {
-    this.toggle(country, this.countries);
-    this.checkedCountries = this.countries.filter(c => c.checked === true).map(c => c.id);
+    toggle(country, this.countries);
+    this.checkedCountries = this.getSelectedCountries();
     this.previews = this.total_previews
       .filter(this.byCountry)
       .filter(this.byCategories)
@@ -91,8 +108,7 @@ class ListingStore {
   // general methods
   extractCategories = data => {
     this.checkedCategories = this.getSelectedCategories();
-
-    this.categories = sortCategoriesByName(
+    this.categories = orderByName(
       Array.from(new Set(data.map(data => data.video.content_category))).map(cat => {
         return {
           id: cat,
@@ -102,28 +118,15 @@ class ListingStore {
       })
     );
   };
-  getMax = (countries, fanbase) => {
-    let country_max = "";
-    let percentage = "";
-    let max = 0;
-    Object.keys(countries).forEach(k => {
-      if (countries[k] > max) {
-        max = countries[k];
-        country_max = k;
-        percentage = Math.round(countries[k] / fanbase * 100);
-      }
-    });
-    return { country_max, percentage };
-  };
 
   attachMainCountry = videos => {
     return videos.map(video => {
       const page = this.pages.find(page => page.objectId === video.page_id);
       let allCountries = Object.assign({}, page.country);
       if (page.country) {
-        this.firstMax = this.getMax(page.country, video.page_fan);
+        this.firstMax = getMax(page.country, video.page_fan);
         delete allCountries[this.firstMax.country_max];
-        this.secondMax = this.getMax(allCountries, video.page_fan);
+        this.secondMax = getMax(allCountries, video.page_fan);
       }
       video.country = [
         { id: this.firstMax.country_max, percentage: this.firstMax.percentage, descr: this.firstMax.country_max },
@@ -133,10 +136,6 @@ class ListingStore {
     });
   };
 
-  toggle = (item, array) => {
-    const index = array.findIndex(c => c.id === item);
-    array[index].checked = !array[index].checked;
-  };
   getSelectedCountries = () => this.countries.filter(country => country.checked === true).map(c => c.id);
   getSelectedCategories = () => this.categories.filter(c => c.checked === true).map(c => c.id);
 
@@ -157,14 +156,15 @@ class ListingStore {
   };
 
   fetch = () => {
-    const period = this.filters.period;
+    const { period } = this.filters;
+    const { weight } = this.filters * 2;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
-    const weight = this.filters.weight * 2;
     const sort = ["shares_diff_normalized", "likes_diff_normalized", "comments_diff_normalized", "reactions_diff_normalized"];
     let pagesRequired = "";
     this.loader = true;
 
     if (this.filters.selectedPages.length !== 0) pagesRequired = "/byPages/" + this.filters.selectedPages.join(",");
+
     fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=1000")
       .then(response => response.json())
       .then(this.attachMainCountry)
@@ -180,8 +180,8 @@ class ListingStore {
           this.previews = this.total_previews.slice(0, 39);
           this.extractCategories(this.total_previews);
         }
-        this.loader = false;
-      });
+      })
+      .then(() => (this.loader = false));
   };
 }
 export default new ListingStore();
