@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Flex, Box } from "reflexbox";
 import Graph from "../Graph";
 import Post from "./Post";
-import Header from "../Header";
 import "./index.css";
 import ConceptsGraph from "./ConceptsGraph";
 
@@ -159,7 +158,6 @@ class Detail extends Component {
     return (
       <Flex column className="graphs_container">
         {this.state.loading && <div className="loader">Loading</div>}
-        <Header />
         <Box>
           <Post data={this.state.post} />
         </Box>

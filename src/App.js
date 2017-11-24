@@ -7,6 +7,7 @@ import Settings from "./components/Settings";
 import { Provider } from "mobx-react";
 import listingStore from "./stores/ListingStore";
 import settingsStore from "./stores/SettingsStore";
+import Header from "./components/Header";
 
 const stores = {
   listingStore,
@@ -19,6 +20,7 @@ class App extends Component {
       <Provider {...stores}>
         <Router>
           <div>
+            <Header />
             <Switch>
               <Redirect exact from="/" to="/listing/v/today/1/1" />
             </Switch>

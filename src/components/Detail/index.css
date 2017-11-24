@@ -1,40 +1,30 @@
 .Post {
   border-bottom: 1px solid gray;
   margin: 0 20px;
-  padding: 0 20px;
-}
+  padding: 0 20px; }
+
 .metrics_graph,
 .concepts_graph {
   background-color: white;
   margin: 20px;
-  box-shadow: 0px 5px 15px 0px rgba(212, 212, 212, 1);
-}
+  box-shadow: 0px 5px 15px 0px #d4d4d4; }
+
 .page_fanbase,
 .post_page {
-  font-weight: 300;
-}
+  font-weight: 300; }
+
 .see_post > img {
   width: 25px;
   height: 15px;
-  padding: 0 10px;
-}
+  padding: 0 10px; }
+
 .post_name_link > a {
   text-decoration: none;
-  color: black;
-}
+  color: black; }
+
 .post_name_link > a:hover {
   color: gray;
-  cursor: pointer;
-}
-
-.graphs_container .origin_link {
-  width: 200px;
-  height: 50px;
-  padding: 10px;
-  line-height: 50px;
-  margin-left: 20px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .graphs_container .origin_link {
   width: 120px;
@@ -42,15 +32,12 @@
   padding: 10px 35px;
   line-height: 50px;
   margin-left: 20px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .graphs_container .origin_link[disabled] {
   cursor: default;
-  background-color: rgba(0, 214, 180, 0.6);
-}
+  background-color: rgba(0, 214, 180, 0.6); }
 
 .graphs_container .origin_link.action span {
   overflow: hidden;
-  display: block;
-}
+  display: block; }

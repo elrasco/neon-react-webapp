@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PostPreviewList from "../PostPreviewList";
-import Header from "../Header";
+
 import FilterBar from "./../FilterBar";
 import FilterCategories from "./../FilterCategories";
 import { observer, inject } from "mobx-react";
@@ -46,7 +46,6 @@ class Listing extends Component {
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
     return (
       <Flex column>
-        <Header />
         <Flex>
           <FilterBar period={this.props.match.params.period} type={type} />
           {this.props.listingStore.loader && <div className="loader">Loading</div>}
