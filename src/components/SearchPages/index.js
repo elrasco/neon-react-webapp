@@ -55,8 +55,8 @@ class SearchPages extends Component {
       <Flex className="SearchPages" column align="start">
         <Flex align="center">
           <Flex style={{ marginRight: "10px" }}>Filter by page</Flex>
-          <select onChange={this.handleChange}>
-            <option id="default" value="null" selected="selected">
+          <select onChange={this.handleChange} defaultValue={"null"}>
+            <option id="default" value="null">
               Choose a page
             </option>
             {this.pages}

@@ -50,7 +50,7 @@ class Listing extends Component {
         <Flex>
           <FilterBar period={this.props.match.params.period} type={type} />
           {this.props.listingStore.loader && <div className="loader">Loading...</div>}
-          <PostPreviewList data={this.props.listingStore.previews} type={type} period={this.props.match.params.period} />
+          <PostPreviewList data={this.props.listingStore.previews} type={type} />
           <FilterCategories />
         </Flex>
       </Flex>
