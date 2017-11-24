@@ -135,12 +135,16 @@ class FilterBar extends Component {
               </Link>
             </Flex>
             <div className="divider_bar" />
-            <Flex className="sort_title fanbase">
-              <Flex> Fanbase handicap:</Flex>
-            </Flex>
-            <Flex align="center">
-              <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
-            </Flex>
+            {this.props.listingStore.filters.selectedPages.length === 0 && (
+              <Flex column>
+                <Flex className="sort_title fanbase">
+                  <Flex> Fanbase handicap:</Flex>
+                </Flex>
+                <Flex align="center">
+                  <Slider min={0} max={1} step={0.25} defaultValue={this.props.listingStore.filters.weight} handle={this.handle} onChange={this.onSlideChange} className="custom_slider" />
+                </Flex>
+              </Flex>
+            )}
           </Flex>
         </Flex>
       </Flex>

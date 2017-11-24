@@ -35,7 +35,6 @@ class FilterCategories extends Component {
         </Flex>
       );
     });
-    console.log(this.props.listingStore.filters.selectedPages.length);
     return (
       <Flex column w={1} className="FilterCategories" justify="start" align="start">
         <Flex className="category_title"> Categories:</Flex>

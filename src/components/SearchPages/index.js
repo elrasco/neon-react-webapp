@@ -14,7 +14,6 @@ class SearchPages extends Component {
       this.selected.push(option.target.value);
     }
     this.props.listingStore.changeFilters({ selectedPages: this.selected });
-    console.log(this.props.listingStore.filters.selectedPages.filter(p => !!p));
     this.props.listingStore.history.push(window.location.pathname + "?" + queryString.stringify({ pages: this.props.listingStore.filters.selectedPages }));
   };
   removeFilter = pageId => {
@@ -32,7 +31,6 @@ class SearchPages extends Component {
 
   render() {
     if (this.props.listingStore.pages) {
-      this.pagesObj = this.props.listingStore.pages;
       this.pages = this.props.listingStore.pages.filter(p => p !== undefined).map(page => {
         return (
           <option key={page.objectId} value={page.objectId} id={page.name}>
@@ -54,8 +52,8 @@ class SearchPages extends Component {
 
     return (
       <Flex className="SearchPages" column align="start">
-        <Flex>
-          <Flex style={{ marginRight: "15px" }}>Select a page</Flex>
+        <Flex align="center">
+          <Flex style={{ marginRight: "10px" }}>Filter by page</Flex>
           <select onChange={this.handleChange}>
             <option value="null">None</option>
             {this.pages}
