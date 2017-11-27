@@ -52,9 +52,9 @@ class SearchPages extends Component {
     });
 
     return (
-      <Flex className="SearchPages" column align="start">
+      <Flex className="SearchPages" column align="start" style={{ marginLeft: "20px" }}>
         <Flex align="center">
-          <Flex style={{ marginRight: "10px" }}>Filter by page</Flex>
+          {/* <Flex style={{ marginRight: "10px" }}>Filter by page</Flex> */}
           <select onChange={this.handleChange}>
             <option id="default" value="null" selected="selected">
               Choose a page

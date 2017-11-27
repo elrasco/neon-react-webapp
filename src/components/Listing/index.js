@@ -7,6 +7,8 @@ import { observer, inject } from "mobx-react";
 import queryString from "query-string";
 import { Flex } from "reflexbox";
 
+import SearchPages from "../SearchPages";
+
 @inject("listingStore")
 @observer
 class Listing extends Component {
@@ -46,6 +48,7 @@ class Listing extends Component {
     this.props.match.params.type === "v" ? (type = "video") : (type = "post");
     return (
       <Flex column>
+        <SearchPages />
         <Flex>
           <FilterBar period={this.props.match.params.period} type={type} />
           {this.props.listingStore.loader && <div className="loader">Loading</div>}
