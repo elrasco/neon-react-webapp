@@ -156,8 +156,7 @@ class ListingStore {
   };
 
   fetch = () => {
-    const { period } = this.filters;
-    const { weight } = this.filters * 2;
+    const { period, weight } = this.filters;
     const type = this.filters.type === "v" ? "Videos" : "Posts";
     const sort = ["shares_diff_normalized", "likes_diff_normalized", "comments_diff_normalized", "reactions_diff_normalized"];
     let pagesRequired = "";
@@ -165,7 +164,7 @@ class ListingStore {
 
     if (this.filters.selectedPages.length !== 0) pagesRequired = "/byPages/" + this.filters.selectedPages.join(",");
 
-    fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight + "&limit=1000")
+    fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight * 2 + "&limit=1000")
       .then(response => response.json())
       .then(this.attachMainCountry)
       .then(response => {
