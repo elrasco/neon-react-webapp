@@ -1,43 +1,47 @@
 .Preview > div {
-  width: 100%;
   position: relative;
 }
 .Preview {
-  border: 1px solid gray;
+  background-color: white;
+  box-shadow: 0px 5px 15px 0px rgba(212, 212, 212, 1);
 }
-i.fa.fa-bar-chart {
+.bar-chart {
   display: block;
   color: white;
-  padding: 5px;
-  font-size: 20px;
-  border: 1px solid white;
-  background-color: rgba(255, 124, 70, 1);
+  padding: 10px 10px 10px 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #00d6b4;
   position: absolute;
-  right: -1px;
-  top: 0;
+  right: 7px;
+  top: 7px;
 }
 .publisher {
-  color: gray;
-  padding: 10px;
-  font-size: 15px;
+  color: black;
+  padding: 2.5% 4%;
+  font-size: 12px;
+  font-weight: 300;
+  width: 92%;
 }
 .publisher > img {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
+  border: 1px solid #f1f0f2;
+  border-radius: 50%;
 }
 
 .imgBox > img:hover {
-  transform: scale(1.15);
+  filter: brightness(100%);
 }
 .imgBox {
   display: inline-block;
   overflow: hidden;
-  border: 1px solid gray;
   width: 100%;
   position: relative;
 }
 .imgBox img {
+  filter: brightness(70%);
   display: block;
   transition: 0.4s ease-in-out;
 }
@@ -45,19 +49,57 @@ img {
   width: 100%;
 }
 div.description {
-  padding: 10px;
+  padding: 2.5% 4% 2.5% 4%;
+  font-size: 15px;
+  font-weight: 500;
 }
 .reactions {
-  padding: 0 10px 20px 10px;
+  padding: 0% 4% 6% 4%;
   color: gray;
+  font-size: 13px;
+}
+.metric > i {
+  margin: 5px 3px 5px 0px;
 }
 .reactions > i {
   width: 20px !important;
   height: 20px !important;
 }
+.divider {
+  width: 100%;
+  border-bottom: 1px solid #dcdcdc;
+  margin: 10px 0 10px 0px;
+}
+.see_more_button {
+  padding: 2.8% 0% 1% 0%;
+}
+.tile_category,
+.tile_country {
+  padding: 3px;
+  font-size: 12px;
+}
+.tile_category {
+  text-transform: capitalize;
+}
+.tile_country > img,
+.tile_category > img {
+  margin-right: 5px;
+  max-height: 12px;
+  max-width: 12px;
+}
+.tile_country > div {
+  min-width: 50px;
+}
+.tile_category {
+  min-width: 100px;
+}
 .origin_link {
-  padding: 10px 0;
+  width: 40%;
+  padding: 2.5%;
+  text-align: center;
   text-decoration: none;
-  color: rgba(255, 124, 70, 1);
+  background-color: #00d6b4;
+  color: white;
   font-weight: 600;
+  border-radius: 20px;
 }

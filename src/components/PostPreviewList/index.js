@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Flex, Box } from "reflexbox";
 import { Link } from "react-router-dom";
 import Preview from "../Preview";
+import SearchPages from "../SearchPages";
 import "./index.css";
 import StackGrid from "react-stack-grid";
 
@@ -21,13 +22,14 @@ class PostPreviewList extends Component {
     }
 
     return (
-      <Box flex p={"2px"} className="PostPreviewList" {...this.props}>
-        <Flex w={1} column>
+      <Box flex p={"2px"} className="PostPreviewList" {...this.props} column>
+        <SearchPages />
+        <Flex w={1} column className="stackContainer">
           {!this.props.data && <div>Loading</div>}
           {this.props.data.length === 0 && this.state.type === "video" && <div>No videos available</div>}
           {this.props.data.length === 0 && this.state.type === "post" && <div>No posts available</div>}
           {this.props.data.length > 0 && (
-            <StackGrid gutterWidth={20} gutterHeight={20} columnWidth={260} monitorImagesLoaded={true}>
+            <StackGrid gutterWidth={30} gutterHeight={40} columnWidth={260} monitorImagesLoaded={true}>
               {this.previews}
             </StackGrid>
           )}
