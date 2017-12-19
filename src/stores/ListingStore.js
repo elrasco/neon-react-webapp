@@ -124,10 +124,10 @@ class ListingStore {
   };
 
   attachMainCountry = videos => {
-    return videos.map(video => {
+    return videos.filter(video => this.pages.find(page => page.objectId === video.page_id)).map(video => {
       const page = this.pages.find(page => page.objectId === video.page_id);
-      let allCountries = Object.assign({}, page.country);
       if (page.country) {
+        let allCountries = Object.assign({}, page.country);
         this.firstMax = getMax(page.country, video.page_fan);
         delete allCountries[this.firstMax.country_max];
         this.secondMax = getMax(allCountries, video.page_fan);
