@@ -31,3 +31,29 @@ select > option {
   background-color: white;
   padding: 8px;
 }
+.newPage {
+  margin: 0 20px;
+}
+.newPage > div {
+  margin: 0 20px;
+}
+.newPage > input {
+  min-width: 350px;
+  padding: 8px;
+  border: 1px solid #00d6b4;
+}
+.addPage {
+  border: 2px solid #00d6b4;
+  padding: 5px;
+  border-radius: 4px;
+}
+.addPage:hover {
+  background-color: #00d6b4;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+input:focus {
+  outline: none !important;
+  border: 1px solid #00d6b4;
+}

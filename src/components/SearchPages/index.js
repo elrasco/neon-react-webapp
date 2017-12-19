@@ -3,6 +3,7 @@ import { Flex } from "reflexbox";
 import "./index.css";
 import { observer, inject } from "mobx-react";
 import queryString from "query-string";
+import Pages from "../../services/Pages";
 
 @inject("listingStore")
 @observer
@@ -28,6 +29,12 @@ class SearchPages extends Component {
     if (this.props.listingStore.pages) {
       return this.props.listingStore.pages.find(page => page.objectId === pageId).name;
     }
+  };
+  addPage = () => {
+    const pageUrl = document.getElementById("pageUrl").value;
+    return Pages.addPage(pageUrl).then(() => {
+      return (document.getElementById("pageUrl").value = "");
+    });
   };
 
   render() {
@@ -61,6 +68,13 @@ class SearchPages extends Component {
             </option>
             {this.pages}
           </select>
+          <Flex className="newPage" align="center">
+            <Flex>Add a new page url</Flex>
+            <input id="pageUrl" type="text" placeholder="example: https://www.facebook.com/new_facebook_page" />
+            <div className="addPage" onClick={this.addPage.bind(this)}>
+              Done
+            </div>
+          </Flex>
         </Flex>
         {this.props.listingStore.filters.selectedPages.length > 0 && (
           <Flex align="start" justify="center" className="tags">
