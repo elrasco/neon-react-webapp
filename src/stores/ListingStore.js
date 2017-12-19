@@ -14,6 +14,9 @@ const sortByName = pages => {
     return 0;
   });
 };
+const filterByPageName = pages => {
+  return pages.filter(page => page.name);
+};
 const shrinkPages = pages => {
   return pages.map(page => {
     return { name: page.name, objectId: page.objectId, fan_count: page.fan_count, checked: false, country: page.fans_country };
@@ -66,6 +69,7 @@ class ListingStore {
   constructor() {
     Pages.getAll()
       .then(shrinkPages)
+      .then(filterByPageName)
       .then(sortByName)
       .then(res => {
         return (this.pages = res);
