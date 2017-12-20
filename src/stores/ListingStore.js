@@ -67,18 +67,9 @@ class ListingStore {
   checkedCategories = [];
   checkedCountries = [];
   constructor() {
-    Pages.getAll()
-      .then(shrinkPages)
-      .then(filterByPageName)
-      .then(sortByName)
-      .then(res => (this.pages = res));
-
+    // this.setPages();
     setInterval(() => {
-      Pages.getAll()
-        .then(shrinkPages)
-        .then(filterByPageName)
-        .then(sortByName)
-        .then(res => (this.pages = res));
+      this.setPages();
     }, 60000);
 
     this.countries = [
@@ -89,6 +80,13 @@ class ListingStore {
       { id: "GB", descr: "UK", checked: this.getSelectedCountries().includes("GB") },
       { id: "US", descr: "USA", checked: this.getSelectedCountries().includes("US") }
     ];
+  }
+  setPages() {
+    return Pages.getAll()
+      .then(shrinkPages)
+      .then(filterByPageName)
+      .then(sortByName)
+      .then(res => (this.pages = res));
   }
   // actions
   @action
@@ -176,6 +174,7 @@ class ListingStore {
     if (this.filters.selectedPages.length !== 0) pagesRequired = "/byPages/" + this.filters.selectedPages.join(",");
     fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight * 2 + "&limit=1000")
       .then(response => response.json())
+      .then(videos => this.setPages().then(pages => videos))
       .then(this.attachMainCountry)
       .then(response => {
         this.total_previews = response;
