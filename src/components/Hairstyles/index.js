@@ -60,6 +60,18 @@ class Hairstyles extends Component {
               allowTransparency="true"
               allowFullScreen="true"
             />
+            <iframe
+              src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F5min.crafts%2Fvideos%2F1241659192643330%2F&show_text=1&width=476"
+              width="476"
+              height="587"
+              title="6"
+              style={{ border: "none", overflow: "hidden" }}
+              scrolling="no"
+              frameBorder="0"
+              allowTransparency="true"
+              allowFullScreen="true"
+            />
+            <div className="placeholder" style={{ width: "350px" }} />
           </Flex>
         </Flex>
         <Flex column className="hacks-section">
