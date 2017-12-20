@@ -19,7 +19,7 @@ const filterByPageName = pages => {
 };
 const shrinkPages = pages => {
   return pages.map(page => {
-    return { name: page.name, objectId: page.objectId, fan_count: page.fan_count, checked: false, country: page.fans_country, id: page.id };
+    return { name: page.name, objectId: page.objectId, fan_count: page.fan_count, checked: false, country: page.fans_country, id: page.id, picture: page.picture };
   });
 };
 

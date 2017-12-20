@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import { Box, Flex } from "reflexbox";
 import "./index.css";
+import { observer, inject } from "mobx-react";
 
+@inject("listingStore")
+@observer
 class Links extends Component {
   getPage() {
-    if (this.pages) {
+    if (this.props.listingStore.pages) {
       if (this.props.publisher.post) {
-        this.pageName = this.pages
+        this.pageName = this.props.listingStore.pages
           .filter(page => (this.props.publisher.post.page_id ? page.objectId === this.props.publisher.post.page_id : page.objectId === this.props.publisher.page_id))
           .map(page => page.name);
-        this.pageImage = this.pages
+        this.pageImage = this.props.listingStore.pages
           .filter(page => (this.props.publisher.post.page_id ? page.objectId === this.props.publisher.post.page_id : page.objectId === this.props.publisher.page_id))
           .map(page => page.picture);
       } else if (this.props.publisher.video) {
-        this.pageName = this.pages
+        this.pageName = this.props.listingStore.pages
           .filter(page => (this.props.publisher.video.page_id ? page.objectId === this.props.publisher.video.page_id : page.objectId === this.props.publisher.page_id))
           .map(page => page.name);
-        this.pageImage = this.pages
+        this.pageImage = this.props.listingStore.pages
           .filter(page => (this.props.publisher.video.page_id ? page.objectId === this.props.publisher.video.page_id : page.objectId === this.props.publisher.page_id))
           .map(page => page.picture);
       }
