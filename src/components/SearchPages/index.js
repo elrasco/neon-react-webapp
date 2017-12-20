@@ -41,7 +41,7 @@ class SearchPages extends Component {
     if (this.props.listingStore.pages) {
       this.pages = this.props.listingStore.pages.filter(p => p !== undefined).map(page => {
         return (
-          <option key={page.objectId} value={page.objectId} id={page.name}>
+          <option key={page.id} value={page.objectId} id={page.name}>
             {page.name}
           </option>
         );
