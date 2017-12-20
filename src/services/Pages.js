@@ -1,16 +1,19 @@
+// const getAll = () => {
+//   return new Promise((resolve, reject) => {
+//     if (localStorage.getItem("NEON-PAGES")) {
+//       resolve(JSON.parse(localStorage.getItem("NEON-PAGES")));
+//     } else {
+//       fetch(`${process.env.REACT_APP_API_URL}/api/pages`)
+//         .then(response => response.json())
+//         .then(pages => {
+//           localStorage.setItem("NEON-PAGES", JSON.stringify(pages));
+//           resolve(JSON.parse(localStorage.getItem("NEON-PAGES")));
+//         });
+//     }
+//   });
+// };
 const getAll = () => {
-  return new Promise((resolve, reject) => {
-    if (localStorage.getItem("NEON-PAGES")) {
-      resolve(JSON.parse(localStorage.getItem("NEON-PAGES")));
-    } else {
-      fetch(`${process.env.REACT_APP_API_URL}/api/pages`)
-        .then(response => response.json())
-        .then(pages => {
-          localStorage.setItem("NEON-PAGES", JSON.stringify(pages));
-          resolve(JSON.parse(localStorage.getItem("NEON-PAGES")));
-        });
-    }
-  });
+  return fetch(`${process.env.REACT_APP_API_URL}/api/pages`).then(response => response.json());
 };
 
 module.exports = {

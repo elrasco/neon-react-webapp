@@ -71,9 +71,16 @@ class ListingStore {
       .then(shrinkPages)
       .then(filterByPageName)
       .then(sortByName)
-      .then(res => {
-        return (this.pages = res);
-      });
+      .then(res => (this.pages = res));
+
+    setInterval(() => {
+      Pages.getAll()
+        .then(shrinkPages)
+        .then(filterByPageName)
+        .then(sortByName)
+        .then(res => (this.pages = res));
+    }, 60000);
+
     this.countries = [
       { id: "IT", descr: "Italy", checked: this.getSelectedCountries().includes("IT") },
       { id: "DE", descr: "Germany", checked: this.getSelectedCountries().includes("DE") },
@@ -167,7 +174,6 @@ class ListingStore {
     this.loader = true;
 
     if (this.filters.selectedPages.length !== 0) pagesRequired = "/byPages/" + this.filters.selectedPages.join(",");
-
     fetch(process.env.REACT_APP_API_URL + "/api/" + period + type + pagesRequired + "?sort=" + sort[Number(this.filters.sort) - 1] + "&w=" + weight * 2 + "&limit=1000")
       .then(response => response.json())
       .then(this.attachMainCountry)

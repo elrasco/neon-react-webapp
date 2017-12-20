@@ -1,17 +1,8 @@
 import React, { Component } from "react";
 import { Box, Flex } from "reflexbox";
 import "./index.css";
-import Pages from "../../services/Pages";
 
 class Links extends Component {
-  constructor(props) {
-    super(props);
-
-    Pages.getAll().then(pages => {
-      this.pages = pages;
-    });
-  }
-
   getPage() {
     if (this.pages) {
       if (this.props.publisher.post) {
