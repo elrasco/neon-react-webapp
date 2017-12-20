@@ -1,0 +1,11 @@
+.hacks-section {
+  width: 80%;
+  margin: auto;
+}
+
+.iframe-container > iframe {
+  max-width: 350px;
+  min-width: 350px;
+  max-height: 550px;
+  display: flex;
+}
